@@ -23,7 +23,7 @@ default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 
 case node["platform_family"]
-when "rhel", "fedora"
+when "rhel"
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
@@ -41,13 +41,6 @@ when "debian"
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
-when "suse"
-  default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['fpm_user']      = 'wwwrun'
-  default['php']['fpm_group']     = 'www'
-  default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
-  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'

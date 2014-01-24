@@ -20,7 +20,7 @@
 #
 
 case node['platform_family']
-when "rhel", "fedora"
+when "rhel"
   %w{ gcc make httpd-devel pcre pcre-devel }.each do |pkg|
     package pkg do
       action :install

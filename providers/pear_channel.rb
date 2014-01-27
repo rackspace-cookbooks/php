@@ -1,10 +1,12 @@
 #
 # Author:: Seth Chisamore <schisamo@opscode.com>
-# Cookbook Name:: php
+# Author:: Christopher Coffey <christopher.coffey@rackspace.com>
+# Cookbook Name:: rackspace_php
 # Provider:: pear_channel
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
-#
+# Copyright:: 2014, Rackspace US, Inc.
+# 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -76,7 +78,7 @@ action :remove do
 end
 
 def load_current_resource
-  @current_resource = Chef::Resource::PhpPearChannel.new(@new_resource.name)
+  @current_resource = Chef::Resource::RackspacePhpPearChannel.new(@new_resource.name)
   @current_resource.channel_name(@new_resource.channel_name)
   @current_resource
 end

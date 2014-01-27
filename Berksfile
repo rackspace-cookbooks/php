@@ -2,7 +2,6 @@ site :opscode
 
 metadata
 
-group :integration do
-  cookbook "apt"
-  cookbook "yum"
-end
+cookbook "rackspace_apt", git: "https://github.com/rackspace-cookbooks/rackspace_apt.git"
+cookbook "rackspace_yum", git: "https://github.com/rackspace-cookbooks/rackspace_yum.git"
+cookbook "rackspace_build_essential", git: "https://github.com/rackspace-cookbooks/rackspace_build_essential.git"

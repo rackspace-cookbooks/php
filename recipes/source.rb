@@ -1,9 +1,12 @@
 #
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Cookbook Name:: php
-# Recipe:: package
+# Author:: Seth Chisamore (<schisamo@opscode.com>)
+# Author:: Christopher Coffey (<christopher.coffey@rackspace.com>)
+#
+# Cookbook Name:: rackspace_php
+# Recipe:: source
 #
 # Copyright 2011, Opscode, Inc.
+# Copyright 2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +21,9 @@
 # limitations under the License.
 #
 
-configure_options = node['php']['configure_options'].join(" ")
+configure_options = node['rackspace_php']['configure_options'].join(" ")
 
-include_recipe "build-essential"
+include_recipe "rackspace_build_essential"
 include_recipe "xml"
 include_recipe "mysql::client" if configure_options =~ /mysql/
 
@@ -36,23 +39,23 @@ pkgs.each do |pkg|
   end
 end
 
-version = node['php']['version']
+version = node['rackspace_php']['version']
 
 remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
-  source "#{node['php']['url']}/php-#{version}.tar.gz"
-  checksum node['php']['checksum']
+  source "#{node['rackspace_php']['url']}/php-#{version}.tar.gz"
+  checksum node['rackspace_php']['checksum']
   mode "0644"
   not_if "which php"
 end
 
-if node['php']['ext_dir']
-  directory node['php']['ext_dir'] do
+if node['rackspace_php']['ext_dir']
+  directory node['rackspace_php']['ext_dir'] do
     owner "root"
     group "root"
     mode "0755"
     recursive true
   end
-  ext_dir_prefix = "EXTENSION_DIR=#{node['php']['ext_dir']}"
+  ext_dir_prefix = "EXTENSION_DIR=#{node['rackspace_php']['ext_dir']}"
 else
   ext_dir_prefix = ""
 end
@@ -67,24 +70,24 @@ bash "build php" do
   not_if "which php"
 end
 
-directory node['php']['conf_dir'] do
+directory node['rackspace_php']['conf_dir'] do
   owner "root"
   group "root"
   mode "0755"
   recursive true
 end
 
-directory node['php']['ext_conf_dir'] do
+directory node['rackspace_php']['ext_conf_dir'] do
   owner "root"
   group "root"
   mode "0755"
   recursive true
 end
 
-template "#{node['php']['conf_dir']}/php.ini" do
+template "#{node['rackspace_php']['conf_dir']}/php.ini" do
   source "php.ini.erb"
   owner "root"
   group "root"
   mode "0644"
-  variables(:directives => node['php']['directives'])
+  variables(:directives => node['rackspace_php']['directives'])
 end

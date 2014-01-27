@@ -1,9 +1,12 @@
 #
 # Author:: Seth Chisamore <schisamo@opscode.com>
-# Cookbook Name:: php
+# Author:: Christopher Coffey <christopher.coffey@rackspace.com>
+#
+# Cookbook Name:: rackspace_php
 # Provider:: pear_package
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
+# Copyright:: 2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -101,7 +104,7 @@ end
 # so refactoring into core Chef should be easy
 
 def load_current_resource
-  @current_resource = Chef::Resource::PhpPear.new(@new_resource.name)
+  @current_resource = Chef::Resource::RackspacePhpPear.new(@new_resource.name)
   @current_resource.package_name(@new_resource.package_name)
   @bin = 'pear'
   if pecl?

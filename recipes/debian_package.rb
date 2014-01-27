@@ -26,9 +26,9 @@ node['rackspace_php']['packages'].each do |pkg|
 end
 
 template "#{node['rackspace_php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  variables(:directives => node['rackspace_php']['directives'])
+  source 'php.ini.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(directives: node['rackspace_php']['directives'])
 end

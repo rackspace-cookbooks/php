@@ -6,7 +6,7 @@
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
 # Copyright:: 2014, Rackspace US, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -35,6 +35,7 @@ action :discover do
     Chef::Log.info("Discovering pear channel #{@new_resource}")
     execute "pear channel-discover #{@new_resource.channel_name}" do
       action :run
+      new_resource.updated_by_last_action(true)
     end
   end
 end
@@ -44,6 +45,7 @@ action :add do
     Chef::Log.info("Adding pear channel #{@new_resource} from #{@new_resource.channel_xml}")
     execute "pear channel-add #{@new_resource.channel_xml}" do
       action :run
+      new_resource.updated_by_last_action(true)
     end
   end
 end
@@ -61,8 +63,8 @@ action :update do
     if update_needed
       description = "update pear channel #{@new_resource}"
       converge_by(description) do
-         Chef::Log.info("Updating pear channel #{@new_resource}")
-         shell_out!("pear channel-update #{@new_resource.channel_name}")
+        Chef::Log.info("Updating pear channel #{@new_resource}")
+        shell_out!("pear channel-update #{@new_resource.channel_name}")
       end
     end
   end
@@ -73,6 +75,7 @@ action :remove do
     Chef::Log.info("Deleting pear channel #{@new_resource}")
     execute "pear channel-delete #{@new_resource.channel_name}" do
       action :run
+      new_resource.updated_by_last_action(true)
     end
   end
 end
@@ -84,12 +87,10 @@ def load_current_resource
 end
 
 private
+
 def exists?
-  begin
-    shell_out!("pear channel-info #{@current_resource.channel_name}")
-    true
-  rescue Chef::Exceptions::ShellCommandFailed
+  shell_out!("pear channel-info #{@current_resource.channel_name}")
+  true
   rescue Mixlib::ShellOut::ShellCommandFailed
     false
-  end
 end

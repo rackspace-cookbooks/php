@@ -25,21 +25,21 @@ default['rackspace_php']['install_method'] = 'package'
 default['rackspace_php']['version_number'] = '5.3'
 default['rackspace_php']['additional_modules'] = []
 
-case node["platform_family"]
-when "rhel"
+case node['platform_family']
+when 'rhel'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['rackspace_php']['conf_dir']      = '/etc'
   default['rackspace_php']['ext_conf_dir']  = '/etc/php.d'
   default['rackspace_php']['fpm_user']      = 'nobody'
   default['rackspace_php']['fpm_group']     = 'nobody'
   default['rackspace_php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
-  default['rackspace_php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
-when "debian"
+  default['rackspace_php']['packages'] = %w(php php-devel php-cli php-pear)
+when 'debian'
   default['rackspace_php']['conf_dir']      = '/etc/php5/cli'
   default['rackspace_php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['rackspace_php']['fpm_user']      = 'www-data'
   default['rackspace_php']['fpm_group']     = 'www-data'
-  default['rackspace_php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
+  default['rackspace_php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
 end
 
 lib_dir = 'lib'
@@ -50,39 +50,39 @@ default['rackspace_php']['checksum'] = '94e92973c996cf8deabafe0ba19b23d48a79d6e6
 default['rackspace_php']['prefix_dir'] = '/usr/local'
 
 default['rackspace_php']['configure_options'] = %W{--prefix=#{rackspace_php['prefix_dir']}
-                                          --with-libdir=#{lib_dir}
-                                          --with-config-file-path=#{rackspace_php['conf_dir']}
-                                          --with-config-file-scan-dir=#{rackspace_php['ext_conf_dir']}
-                                          --with-pear
-                                          --enable-fpm
-                                          --with-fpm-user=#{rackspace_php['fpm_user']}
-                                          --with-fpm-group=#{rackspace_php['fpm_group']}
-                                          --with-zlib
-                                          --with-openssl
-                                          --with-kerberos
-                                          --with-bz2
-                                          --with-curl
-                                          --enable-ftp
-                                          --enable-zip
-                                          --enable-exif
-                                          --with-gd
-                                          --enable-gd-native-ttf
-                                          --with-gettext
-                                          --with-gmp
-                                          --with-mhash
-                                          --with-iconv
-                                          --with-imap
-                                          --with-imap-ssl
-                                          --enable-sockets
-                                          --enable-soap
-                                          --with-xmlrpc
-                                          --with-libevent-dir
-                                          --with-mcrypt
-                                          --enable-mbstring
-                                          --with-t1lib
-                                          --with-mysql
-                                          --with-mysqli=/usr/bin/mysql_config
-                                          --with-mysql-sock
-                                          --with-sqlite3
-                                          --with-pdo-mysql
-                                          --with-pdo-sqlite}
+                                                   --with-libdir=#{lib_dir}
+                                                   --with-config-file-path=#{rackspace_php['conf_dir']}
+                                                   --with-config-file-scan-dir=#{rackspace_php['ext_conf_dir']}
+                                                   --with-pear
+                                                   --enable-fpm
+                                                   --with-fpm-user=#{rackspace_php['fpm_user']}
+                                                   --with-fpm-group=#{rackspace_php['fpm_group']}
+                                                   --with-zlib
+                                                   --with-openssl
+                                                   --with-kerberos
+                                                   --with-bz2
+                                                   --with-curl
+                                                   --enable-ftp
+                                                   --enable-zip
+                                                   --enable-exif
+                                                   --with-gd
+                                                   --enable-gd-native-ttf
+                                                   --with-gettext
+                                                   --with-gmp
+                                                   --with-mhash
+                                                   --with-iconv
+                                                   --with-imap
+                                                   --with-imap-ssl
+                                                   --enable-sockets
+                                                   --enable-soap
+                                                   --with-xmlrpc
+                                                   --with-libevent-dir
+                                                   --with-mcrypt
+                                                   --enable-mbstring
+                                                   --with-t1lib
+                                                   --with-mysql
+                                                   --with-mysqli=/usr/bin/mysql_config
+                                                   --with-mysql-sock
+                                                   --with-sqlite3
+                                                   --with-pdo-mysql
+                                                   --with-pdo-sqlite}

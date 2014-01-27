@@ -23,13 +23,12 @@
 include_recipe 'rackspace_yum'
 
 case node['rackspace_php']['version_number']
-when '5.3' 
+when '5.3'
   node['rackspace_php']['packages'].each do |pkg|
     package pkg do
       action :install
     end
   end
-end 
 when '5.4'
   rackspace_yum_repository 'IUS' do
     description 'IUS Community Packages for Enterprise Linux/CentOS 6'
@@ -53,7 +52,7 @@ when '5.5'
     description 'IUS Community Packages for Enterprise Linux/CentOS 6'
     if platform?('centos')
       mirrorlist 'http://dmirr.iuscommunity.org/mirrorlist/?repo=ius-centos6&arch=$basearch'
-    end 
+    end
     if platform?('redhat')
       mirrorlist 'http://dmirr.iuscommunity.org/mirrorlist/?repo=ius-el6&arch=$basearch'
     end
@@ -70,9 +69,9 @@ when '5.5'
 end
 
 template "#{node['rackspace_php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  variables(:directives => node['rackspace_php']['directives'])
+  source 'php.ini.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(directives: node['rackspace_php']['directives'])
 end

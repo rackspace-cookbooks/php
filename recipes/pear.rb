@@ -1,12 +1,8 @@
-#
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Author::  Christopher Coffey (<christopher.coffey@rackspace.com>)
 #
 # Cookbook Name:: rackspace_php
-# Recipe:: default
+# Recipe:: pear
 #
-# Copyright 2009-2011, Opscode, Inc.
 # Copyright 2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,10 +17,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe 'rackspace_php::default'
 
-case node['platform_family']
-when 'rhel'
-  include_recipe 'rackspace_php::redhat_package'
-when 'debian'
-  include_recipe 'rackspace_php::debian_package'
+rackspace_php_pear_channel 'pear.php.net' do
+  action :update
+end
+
+rackspace_php_pear_channel 'pecl.php.net' do
+  action :update
 end

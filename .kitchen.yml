@@ -9,7 +9,7 @@ platforms:
     box: opscode-ubuntu-12.04
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
   run_list:
-  - recipe[apt]
+  - recipe[rackspace_apt]
 - name: centos-6.4
   driver_config:
     box: opscode-centos-6.4
@@ -19,31 +19,30 @@ platforms:
     box: opscode-debian-7.2.0
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
   run_list:
-  - recipe[apt]
+  - recipe[rackspace)_apt]
 
 suites:
 - name: default
   run_list:
-  - recipe[php]
+  - recipe[rackspace_php]
   attributes: {}
 
-- name: source
+- name: php_5.4
   run_list:
-  - recipe[php]
+  - recipe[rackspace_php]
   attributes:
-    php:
-      install_method: source
+    rackspace_php:
+      version_number: 5.4
+  excludes:
+  - ubuntu-12.04
+  - debian-7.2.0
 
-- name: module-packages
+- name: php_5.5
   run_list:
-  - recipe[php]
-  - recipe[php::module_apc]
-  - recipe[php::module_curl]
-  - recipe[php::module_fpdf]
-  - recipe[php::module_gd]
-  - recipe[php::module_ldap]
-  - recipe[php::module_memcache]
-  - recipe[php::module_mysql]
-  - recipe[php::module_pgsql]
-  - recipe[php::module_sqlite3]
-  attributes: {}
+  - recipe[rackspace_php]
+  attributes:
+    rackspace_php:
+      version_number: 5.5
+  excludes:
+  - ubuntu-12.04
+  - debian-7.2.0

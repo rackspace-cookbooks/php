@@ -1,3 +1,4 @@
+#
 # Author::  Christopher Coffey (<christopher.coffey@rackspace.com>)
 #
 # Cookbook Name:: rackspace_php

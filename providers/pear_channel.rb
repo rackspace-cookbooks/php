@@ -54,7 +54,9 @@ action :update do
   if exists?
     update_needed = false
     begin
-      updated_needed = true if shell_out("pear search -c #{@new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
+      if shell_out("pear search -c #{@new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
+        updated_needed = true   # rubocop:disable UselessAssignment
+      end
     rescue Chef::Exceptions::CommandTimeout
       # CentOS can hang on 'pear search' if a channel needs updating
       Chef::Log.info("Timed out checking if channel-update needed...forcing update of pear channel #{@new_resource}")

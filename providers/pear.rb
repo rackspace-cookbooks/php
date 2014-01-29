@@ -185,7 +185,7 @@ def prefix_channel(channel)
   channel ? "#{channel}/" : ' '
 end
 
-def get_extension_dir
+def getextension_dir
   @extension_dir ||= begin
     p = shell_out('php-config --extension-dir')
     p.stdout.strip
@@ -204,12 +204,12 @@ def get_extension_files(name)
 end
 
 def manage_pecl_ini(name, action, directives, zend_extensions)
-  ext_prefix = get_extension_dir
+  ext_prefix = getextension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
   files = get_extension_files(name)
 
-  extensions = Hash[ files.map { |filepath|
+  extensions = Hash[ files.map { |filepath|   # rubocop:disable Blocks
     rel_file = filepath.clone
     rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
 
@@ -253,12 +253,12 @@ def pecl?
   @pecl ||= begin
     # search as a pear first since most 3rd party channels will report pears as pecls!
     search_cmd = "pear -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-    unless grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
+    if !grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
       false
     else
       # fall back and search as a pecl
       search_cmd = "pecl -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-      unless grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
+      if !grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
         true
       else
         fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."

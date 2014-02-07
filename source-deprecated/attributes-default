@@ -1,5 +1,6 @@
 default['rackspace_php']['install_method'] = 'package'
 
+lib_dir = 'lib'
 default['rackspace_php']['source']['url'] = 'http://php.net/distributions'
 default['rackspace_php']['source']['version'] = '5.4.15'
 default['rackspace_php']['source']['checksum'] = '94e92973c996cf8deabafe0ba19b23d48a79d6e64592a5bf4ea63036eec77c3c'

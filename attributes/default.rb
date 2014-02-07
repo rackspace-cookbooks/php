@@ -24,7 +24,6 @@
 default['rackspace_php']['version_number'] = '5.3'
 default['rackspace_php']['additional_modules'] = []
 
-lib_dir = 'lib'
 default['rackspace_php']['source']['directives'] = {}
 
 case node['platform_family']

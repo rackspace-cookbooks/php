@@ -9,14 +9,6 @@ Vagrant.configure("2") do |config|
     centos.vm.network :private_network, ip: "192.168.254.10"
   end
 
-  config.vm.define "ubuntu" do |ubuntu|
-    ubuntu.vm.box = "ubuntu-1204"
-    ubuntu.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box"
-    ubuntu.omnibus.chef_version = :latest
-    ubuntu.vm.network :private_network, ip: "192.168.254.12"
-  end
-  
-  
   config.vm.boot_timeout = 120
   config.berkshelf.enabled = true
 

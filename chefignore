@@ -1,0 +1,1036 @@
+
+    - update content in file /etc/motd.tail from none to 599890
+        --- /etc/motd.tail	2014-02-05 18:46:34.852933022 +0000
+        +++ /tmp/chef-rendered-template20140205-2776-188q24o	2014-02-05 18:46:34.856934768 +0000
+        @@ -1 +1,18 @@
+        +# This file is managed by Chef. Manual changes will be overridden
+        +
+        +*** Chef Details ***
+        +Chef-Client: default-debian-720
+        +Hostname: default-debian-720.vagrantup.com
+
+        +Chef Server: Solo
+
+        +Environment: _default
+
+        +Last Run: 2014-02-05 18:46:34 +0000
+        +
+
+        +Roles and Recipes:
+
+        +  Recipe: rackspace_apt
+        +  Recipe: rackops-rolebook
+
+        +
+
+        +
+
+        +********************
+        +
+        +[2014-02-05T18:46:34+00:00] INFO: template[/etc/motd.tail] owner changed to 0
+
+[2014-02-05T18:46:34+00:00] INFO: template[/etc/motd.tail] group changed to 0
+[2014-02-05T18:46:34+00:00] INFO: template[/etc/motd.tail] mode changed to 644
+
+    - change mode from '' to '0644'
+    - change owner from '' to 'root'
+    - change group from '' to 'root'
+
+Recipe: rackspace_ntp::default
+  * package[ntp] action install[2014-02-05T18:46:34+00:00] INFO: Processing package[ntp] action install (rackspace_ntp::default line 24)
+
+           - install version 1:4.2.6.p5+dfsg-2 of package ntp
+
+         * package[ntpdate] action install[2014-02-05T18:46:42+00:00] INFO: Processing package[ntpdate] action install (rackspace_ntp::default line 24)
+
+           - install version 1:4.2.6.p5+dfsg-2 of package ntpdate
+
+         * directory[/var/lib/ntp] action create[2014-02-05T18:46:49+00:00] INFO: Processing directory[/var/lib/ntp] action create (rackspace_ntp::default line 28)
+        (up to date)
+         * directory[/var/log/ntpstats/] action create[2014-02-05T18:46:49+00:00] INFO: Processing directory[/var/log/ntpstats/] action create (rackspace_ntp::default line 28)
+ (up to date)
+  * cookbook_file[/etc/ntp.leapseconds] action create[2014-02-05T18:46:49+00:00] INFO: Processing cookbook_file[/etc/ntp.leapseconds] action create (rackspace_ntp::default line 35)
+[2014-02-05T18:46:49+00:00] INFO: cookbook_file[/etc/ntp.leapseconds] created file /etc/ntp.leapseconds
+
+    - create new file /etc/ntp.leapseconds[2014-02-05T18:46:49+00:00] INFO: cookbook_file[/etc/ntp.leapseconds] updated file contents /etc/ntp.leapseconds
+
+    - update content in file /etc/ntp.leapseconds from none to 611cf9
+        --- /etc/ntp.leapseconds	2014-02-05 18:46:49.480242276 +0000
+        +++ /tmp/.ntp.leapseconds20140205-2776-cjwevq	2014-02-05 18:46:49.488246276 +0000
+        @@ -1 +1,232 @@
+        +#
+        +#	In the following text, the symbol '#' introduces
+        +#	a comment, which continues from that symbol until
+        +#	the end of the line. A plain comment line has a
+        +#	whitespace character following the comment indicator.
+        +#	There are also special comment lines defined below.
+
+        +#	A special comment will always have a non-whitespace
+
+        +#	character in column 2.
+
+        +#
+
+        +#	A blank line should be ignored.
+
+        +#
+        +#	The following table shows the corrections that must
+        +#	be applied to compute International Atomic Time (TAI)
+
+        +#	from the Coordinated Universal Time (UTC) values that
+
+        +#	are transmitted by almost all time services.
+
+        +#
+
+        +#	The first column shows an epoch as a number of seconds
+        +#	since 1900.0 and the second column shows the number of
+
+        +#	seconds that must be added to UTC to compute TAI for
+        +#	any timestamp at or after that epoch. The value on
+        +#	each line is valid from the indicated initial instant
+
+        +#
+until the epoch given on the next one or indefinitely
+        +#	into the future if there is no next line.
+
+        +#	(The comment on each line shows the representation of
+        +#	the corresponding initial epoch in the usual
+        +#	day-month-year format. The epoch always begins at
+
+        +#	00:00:00 UTC on the indicated day. See Note 5 below.)
+        +#
+        +#	Important notes:
+        +#
+        +#	1. Coordinated Universal Time (UTC) is often referred to
+
+        +#	as Greenwich Mean Time (GMT). The GMT time scale is no
+
+        +#	longer used, and the use of GMT to designate UTC is
+
+        +#	discouraged.
+
+        +#
+
+        +#	2. The UTC time scale is realized by many national
+        +#	laboratories and timing centers. Each laboratory
+
+        +#	identifies its realization with its name: Thus
+        +#	UTC(NIST), UTC(USNO), etc. The differences among
+
+        +#	these different realizations are typically on the
+
+        +#	order of a few nanoseconds (i.e., 0.000 000 00x s)
+        +#	and can be ignored for many purposes. These differences
+        +#	are tabulated in Circular T, which is published monthly
+        +#	by the International Bureau of Weights and Measures
+        +#	(BIPM). See www.bipm.fr for more information.
+
+        +#
+
+        +#	3. The current defintion of the relationship between UTC
+        +#	and TAI dates from 1 January 1972. A number of different
+
+        +#	time scales were in use before than epoch, and it can be
+        +#	quite difficult to compute precise timestamps and time
+
+        +#	intervals in those "prehistoric" days. For more information,
+        +#	consult:
+
+        +#
+
+        +#		The Explanatory Supplement to the Astronomical
+
+        +#		Ephemeris.
+        +#	or
+        +#		Terry Quinn, "The BIPM and the Accurate Measurement
+        +#		of Time," Proc. of the IEEE, Vol. 79, pp. 894-905,
+        +#		July, 1991.
+        +#
+
+        +#	4.  The insertion of leap seconds into UTC is currently the
+        +#	responsibility of the International Earth Rotation Service,
+
+        +#	which is located at the Paris Observatory:
+
+        +#
+
+        +#	Central Bureau of IERS
+
+        +#	61, Avenue de l'Observatoire
+
+        +#	75014 Paris, France.
+        +#
+
+        +#	Leap seconds are announced by the IERS in its Bulletin C
+
+        +#
+
+        +#	See hpiers.obspm.fr or www.iers.org for more details.
+
+        +#
+
+        +#	All national laboratories and timing centers use the
+
+        +#	data from the BIPM and the IERS to construct their
+        +#	local realizations of UTC.
+
+        +#
+
+        +#	Although the definition also includes the possibility
+        +#	of dropping seconds ("negative" leap seconds), this has
+
+        +#	never been done and is unlikely to be necessary in the
+
+        +#	foreseeable future.
+        +#
+        +#	5. If your system keeps time as the number of seconds since
+        +#	some epoch (e.g., NTP timestamps), then the algorithm for
+
+        +#	assigning a UTC time stamp to an event that happens during a positive
+
+        +#	leap second is not well defined. The official name of that leap
+
+        +#	second is 23:59:60, but there is no way of representing that time
+        +#	in these systems.
+
+        +#	Many systems of this type effectively stop the system clock for
+
+        +#	one second during the leap second and use a time that is equivalent
+
+        +#	to 23:59:59 UTC twice. For these systems, the corresponding TAI
+        +#	timestamp would be obtained by advancing to the next entry in the
+        +#	following table when the time equivalent to 23:59:59 UTC
+
+        +#	is used for the second time. Thus the leap second which
+
+        +#	occurred on 30 June 1972 at 23:59:59 UTC would have TAI
+
+        +#	timestamps computed as follows:
+
+        +#
+        +#	...
+
+        +#	30 June 1972 23:59:59 (2287785599, first time):	TAI= UTC + 10 seconds
+        +#	30 June 1972 23:59:60 (2287785599,second time):	TAI= UTC + 11 seconds
+        +#	1  July 1972 00:00:00 (2287785600)		TAI= UTC + 11 seconds
+
+        +#	...
+
+        +#
+        +#	If your system realizes the leap second by repeating 00:00:00 UTC twice
+
+        +#	(this is possible but not usual), then the advance to the next entry
+        +#	in the table must occur the second time that a time equivlent to
+        +#	00:00:00 UTC is used. Thus, using the same example as above:
+
+        +#
+        +#	...
+
+        +#       30 June 1972 23:59:59 (2287785599):		TAI= UTC + 10 seconds
+
+        +#       30 June 1972 23:59:60 (2287785600, first time):	TAI= UTC + 10 seconds
+
+        +#       1  July 1972 00:00:00 (2287785600,second time):	TAI= UTC + 11 seconds
+        +#	...
+        +#
+        +#	in both cases the use of timestamps based on TAI produces a smooth
+        +#	time scale with no discontinuity in the time interval.
+
+        +#
+
+        +#	This complexity would not be needed for negative leap seconds (if they
+        +#	are ever used). The UTC time would skip 23:59:59 and advance from
+
+        +#	23:59:58 to 00:00:00 in that case.  The TAI offset would decrease by
+        +#	1 second at the same instant.  This is a much easier situation to deal
+        +#	with, since the difficulty of unambiguously representing the epoch
+        +#	during the leap second does not arise.
+
+        +#
+
+        +#	Questions or comments to:
+        +#		Judah Levine
+
+        +#		Time and Frequency Division
+        +#		NIST
+        +#		Boulder, Colorado
+
+        +#		jlevine@boulder.nist.gov
+
+        +#
+
+        +#	Last Update of leap second values:   11 January 2012
+
+        +#
+        +#	The following line shows this last update date in NTP timestamp
+
+        +#	format. This is the date on which the most recent change to
+
+        +#	the leap second data was added to the file. This line can
+
+        +#	be identified by the unique pair of characters in the first two
+        +#
+columns as shown below.
+        +#
+        +#$	 3535228800
+        +#
+
+        +#	The NTP timestamps are in units of seconds since the NTP epoch,
+        +#	which is 1900.0. The Modified Julian Day number corresponding
+
+        +#	to the NTP time stamp, X, can be computed as
+        +#
+        +#	X/86400 + 15020
+
+        +#
+
+        +#	where the first term converts seconds to days and the second
+
+        +#	term adds the MJD corresponding to 1900.0. The integer portion
+
+        +#	of the result is the integer MJD for that day, and any remainder
+
+        +#	is the time of day, expressed as the fraction of the day since 0
+        +#	hours UTC. The conversion from day fraction to seconds or to
+
+        +#	hours, minutes, and seconds may involve rounding or truncation,
+
+        +#	depending on the method used in the computation.
+        +#
+        +#	The data in this file will be updated periodically as new leap
+
+        +#	seconds are announced. In addition to being entered on the line
+        +#	above, the update time (in NTP format) will be added to the basic
+
+        +#	file name leap-seconds to form the name leap-seconds.<NTP TIME>.
+        +#	In addition, the generic name leap-seconds.list will always point to
+
+        +#	the most recent version of the file.
+        +#
+
+        +#	This update procedure will be performed only when a new leap second
+        +#	is announced.
+
+        +#
+
+        +#	The following entry specifies the expiration date of the data
+        +#	in this file in units of seconds since 1900.0.  This expiration date
+
+        +#	will be changed at least twice per year whether or not a new leap
+
+        +#	second is announced. These semi-annual changes will be made no
+
+        +#	later than 1 June and 1 December of each year to indicate what
+
+        +#	action (if any) is to be taken on 30 June and 31 December,
+        +#	respectively. (These are the customary effective dates for new
+
+        +#	leap seconds.) This expiration date will be identified by a
+
+        +#	unique pair of characters in columns 1 and 2 as shown below.
+        +#	In the unlikely event that a leap second is announced with an
+
+        +#	effective date other than 30 June or 31 December, then this
+
+        +#	file will be edited to include that leap second as soon as it is
+        +#	announced or at least one month before the effective date
+        +#	(whichever is later).
+        +#	If an announcement by the IERS specifies that no leap second is
+        +#	scheduled, then only the expiration date of the file will
+        +#	be advanced to show that the information in the file is still
+        +#	current -- the update time stamp, the data and the name of the file
+        +#	will not change.
+
+        +#
+
+        +#	Updated through IERS Bulletin C46
+
+        +#	File expires on:  28 June 2014
+
+        +#
+        +#@	3612902400
+        +#
+
+        +2272060800	10	# 1 Jan 1972
+        +2287785600	11	# 1 Jul 1972
+        +2303683200	12	# 1 Jan 1973
+
+        +2335219200	13	# 1 Jan 1974
+
+        +2366755200	14	# 1 Jan 1975
+        +2398291200
+       15	# 1 Jan 1976
+        +2429913600	16	# 1 Jan 1977
+
+        +2461449600	17	# 1 Jan 1978
+
+        +2492985600	18	# 1 Jan 1979
+
+        +2524521600	19
+       	# 1 Jan 1980
+        +2571782400	20	# 1 Jul 1981
+        +2603318400	21	# 1 Jul 1982
+        +2634854400	22	# 1 Jul 1983
+        +2698012800	23	# 1 Jul 1985
+
+        +2776982400	24	# 1 Jan 1988
+        +2840140800	25	# 1 Jan 1990
+        +2871676800	26	# 1 Jan 1991
+
+        +2918937600	27	# 1 Jul 1992
+        +2950473600	28	# 1 Jul 1993
+
+        +2982009600	29	# 1 Jul 1994
+
+        +3029443200	30	# 1 Jan 1996
+        +3076704000	31	# 1 Jul 1997
+        +3124137600	32	# 1 Jan 1999
+        +3345062400	33	# 1 Jan 2006
+        +3439756800	34	# 1 Jan 2009
+
+        +3550089600	35	# 1 Jul 2012
+        +#
+        +#	the following special comment contains the
+
+        +#	hash value of the data in this file computed
+        +#	use the secure hash algorithm as specified
+
+        +#	by FIPS 180-1. See the files in ~/pub/sha for
+
+        +#	the details of how this hash value is
+
+        +#	computed. Note that the hash computation
+
+        +#	ignores comments and whitespace characters
+
+        +#	in data lines. It includes the NTP values
+
+        +#	of both the last modification time and the
+        +#	expiration time of the file, but not the
+        +#	white space on those lines.
+
+        +#	the hash line is also ignored in the
+        +#	computation.
+        +#
+        +#h	1151a8f e85a5069 9000fcdb 3d5e5365 1d505b37[2014-02-05T18:46:49+00:00] INFO: cookbook_file[/etc/ntp.leapseconds] owner changed to 0
+
+[2014-02-05T18:46:49+00:00] INFO: cookbook_file[/etc/ntp.leapseconds] group changed to 0
+[2014-02-05T18:46:49+00:00] INFO: cookbook_file[/etc/ntp.leapseconds] mode changed to 644
+
+    - change mode from '' to '0644'
+    - change owner from '' to 'root'
+    - change group from '' to 'root'
+
+  * log[No NTP servers specified, using default ntp.org server pools] action write[2014-02-05T18:46:49+00:00] INFO: Processing log[No NTP servers specified, using default ntp.org server pools] action write (rackspace_ntp::default line 50)
+[2014-02-05T18:46:49+00:00] INFO: No NTP servers specified, using default ntp.org server pools
+
+
+  * template[/etc/ntp.conf] action create[2014-02-05T18:46:49+00:00] INFO: Processing template[/etc/ntp.conf] action create (rackspace_ntp::default line 69)
+[2014-02-05T18:46:49+00:00] INFO: template[/etc/ntp.conf] backed up to /tmp/kitchen/backup/etc/ntp.conf.chef-20140205184649.587059
+[2014-02-05T18:46:49+00:00] INFO: template[/etc/ntp.conf] updated file contents /etc/ntp.conf
+
+    - update content in file /etc/ntp.conf from 8bbb98 to 4e6488
+        --- /etc/ntp.conf	2012-05-12 09:55:09.000000000 +0000
+        +++ /tmp/chef-rendered-template20140205-2776-p6uznp	2014-02-05 18:46:49.580292278 +0000
+        @@ -1,56 +1,30 @@
+        -# /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
+        +# Generated by Chef for default-debian-720.vagrantup.com
+        +# Local modifications will be overwritten.
+
+        +statsdir /var/log/ntpstats/
+
+        +leapfile /etc/ntp.leapseconds
+        +
+         driftfile /var/lib/ntp/ntp.drift
+
+
+        -
+        -# Enable this if you want statistics to be logged.
+        -#statsdir /var/log/ntpstats/
+        -
+         statistics loopstats peerstats clockstats
+         filegen loopstats file loopstats type day enable
+
+         filegen peerstats file peerstats type day enable
+
+         filegen clockstats file clockstats type day enable
+
+
+        -# You do need to talk to an NTP server or two (or three).
+        -#server ntp.your-provider.example
+
+
+
+        -# pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will
+        -# pick a different set every time it starts up.  Please consider joining the
+        -# pool: <http://www.pool.ntp.org/join.html>
+        -server 0.debian.pool.ntp.org iburst
+
+        -server 1.debian.pool.ntp.org iburst
+
+        -server 2.debian.pool.ntp.org iburst
+        -server 3.debian.pool.ntp.org iburst
+        +server 0.pool.ntp.org iburst
+
+        +restrict 0.pool.ntp.org nomodify notrap noquery
+        +server 1.pool.ntp.org iburst
+
+        +restrict 1.pool.ntp.org nomodify notrap noquery
+        +server 2.pool.ntp.org iburst
+        +restrict 2.pool.ntp.org nomodify notrap noquery
+        +server 3.pool.ntp.org iburst
+        +restrict 3.pool.ntp.org nomodify notrap noquery
+
+
+        -
+        -# Access control configuration; see /usr/share/doc/ntp-doc/html/accopt.html for
+        -# details.  The web page <http://support.ntp.org/bin/view/Support/AccessRestrictions>
+        -# might also be helpful.
+        -#
+        -# Note that "restrict" applies to both servers and clients, so a configuration
+
+        -# that might be intended to block requests from certain clients could also end
+        -# up blocking replies from your own upstream servers.
+        -
+        -# By default, exchange time with everybody, but don't allow configuration.
+
+        -restrict -4 default kod notrap nomodify nopeer noquery
+        +restrict default kod notrap nomodify nopeer noquery
+        +restrict 127.0.0.1 nomodify
+
+         restrict -6 default kod notrap nomodify nopeer noquery
+        +restrict -6 ::1 nomodify
+
+
+        -# Local users may interrogate the ntp server more closely.
+
+        -restrict 127.0.0.1
+        -restrict ::1
+        -
+        -# Clients from this (example!) subnet have unlimited access, but only if
+        -# cryptographically authenticated.
+
+        -#restrict 192.168.123.0 mask 255.255.255.0 notrust
+
+        -
+        -
+        -# If you want to provide time to your local subnet, change the next line.
+        -# (Again, the address is an example only.)
+        -#broadcast 192.168.123.255
+        -
+        -# If you want to listen to time broadcasts on your local subnet, de-comment the
+
+        -# next lines.  Please do this only if you trust everybody on the network!
+        -#disable auth
+        -#broadcastclient
+
+  * execute[Force sync hardware clock with system clock] action run[2014-02-05T18:46:49+00:00] INFO: Processing execute[Force sync hardware clock with system clock] action run (rackspace_ntp::default line 92)
+ (skipped due to only_if)
+  * service[ntp] action enable[2014-02-05T18:46:49+00:00] INFO: Processing service[ntp] action enable (rackspace_ntp::default line 98)
+ (up to date)
+  * service[ntp] action start[2014-02-05T18:46:49+00:00] INFO: Processing service[ntp] action start (rackspace_ntp::default line 98)
+ (up to date)
+Recipe: rackspace_iptables::default
+  * package[ufw] action remove[2014-02-05T18:46:49+00:00] INFO: Processing package[ufw] action remove (rackspace_iptables::default line 22)
+        (up to date)
+         * package[iptables-persistent] action install[2014-02-05T18:46:49+00:00] INFO: Processing package[iptables-persistent] action install (rackspace_iptables::default line 37)
+
+           - install version 0.5.7 of package iptables-persistent
+
+         * template[/etc/iptables/rules.v4] action create[2014-02-05T18:46:57+00:00] INFO: Processing template[/etc/iptables/rules.v4] action create (rackspace_iptables::default line 42)
+[2014-02-05T18:46:57+00:00] INFO: template[/etc/iptables/rules.v4] backed up to /tmp/kitchen/backup/etc/iptables/rules.v4.chef-20140205184657.213406
+[2014-02-05T18:46:57+00:00] INFO: template[/etc/iptables/rules.v4] updated file contents /etc/iptables/rules.v4
+
+    - update content in file /etc/iptables/rules.v4 from a02720 to 3b6969
+        --- /etc/iptables/rules.v4	2014-02-05 18:46:56.921893027 +0000
+        +++ /tmp/chef-rendered-template20140205-2776-tt8qtw	2014-02-05 18:46:57.209893033 +0000
+        @@ -1,8 +1,28 @@
+        -# Generated by iptables-save v1.4.14 on Wed Feb  5 18:46:56 2014
+        +*nat
+        +:PREROUTING ACCEPT
+        +:OUTPUT ACCEPT
+        +:POSTROUTING ACCEPT
+        +COMMIT
+         *filter
+        -:INPUT ACCEPT [0:0]
+        -:FORWARD ACCEPT [0:0]
+
+        -:OUTPUT ACCEPT [0:0]
+
+        +:INPUT ACCEPT
+        +:FORWARD ACCEPT
+        +:OUTPUT ACCEPT
+
+        +-A INPUT -s 0.0.0.0/0 -p tcp --dport 22 -j ACCEPT -m comment --comment "vagrant ssh"
+
+        +-A INPUT -s 50.56.228.0/24 -i eth0 -j ACCEPT -m comment --comment "Support"
+        +-A INPUT -s 50.56.230.0/24 -i eth0 -j ACCEPT -m comment --comment "Support"
+        +-A INPUT -s 69.20.52.192/26 -i eth0 -j ACCEPT -m comment --comment "Monitoring"
+        +-A INPUT -s 180.150.149.64/26 -i eth0 -j ACCEPT -m comment --comment "Monitoring"
+
+        +-A INPUT -s 78.136.44.0/26 -i eth0 -j ACCEPT -m comment --comment "Monitoring"
+        +-A INPUT -s 50.57.61.0/26 -i eth0 -j ACCEPT -m comment --comment "Monitoring"
+
+        +-A INPUT -s 50.56.142.128/26 -i eth0 -j ACCEPT -m comment --comment "Monitoring"
+
+        +-A INPUT -s 119.9.4.2/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+        +-A INPUT -s 212.100.225.42/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+
+        +-A INPUT -s 212.100.225.49/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+
+        +-A INPUT -s 120.136.34.22/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+        +-A INPUT -s 50.57.22.125/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+        +-A INPUT -s 69.20.0.1/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+        +-A INPUT -s 72.3.128.84/32 -i eth0 -j ACCEPT -m comment --comment "Bastion"
+        +-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT -m comment --comment "Allow establihsed"
+        +-A INPUT -s 0.0.0.0/0 -j REJECT -m comment --comment "Drop not allowed"
+         COMMIT
+
+        -# Completed on Wed Feb  5 18:46:56 2014[2014-02-05T18:46:57+00:00] INFO: template[/etc/iptables/rules.v4] mode changed to 600
+
+
+    - change mode from '0644' to '0600'
+
+  * service[iptables-persistent] action start[2014-02-05T18:46:57+00:00] INFO: Processing service[iptables-persistent] action start (rackspace_iptables::default line 60)
+       [2014-02-05T18:46:57+00:00] INFO: service[iptables-persistent] started
+
+           - start service service[iptables-persistent]
+
+       Recipe: rackops-rolebook::default
+         * sudo[rack] action install[2014-02-05T18:46:57+00:00] INFO: Processing sudo[rack] action install (rackops-rolebook::default line 34)
+       Recipe: <Dynamically Defined Resource>
+         * template[/etc/sudoers.d/rack] action create[2014-02-05T18:46:57+00:00] INFO: Processing template[/etc/sudoers.d/rack] action create (/tmp/kitchen/cookbooks/sudo/providers/default.rb line 79)
+[2014-02-05T18:46:57+00:00] INFO: template[/etc/sudoers.d/rack] created file /etc/sudoers.d/rack
+
+    - create new file /etc/sudoers.d/rack[2014-02-05T18:46:57+00:00] INFO: template[/etc/sudoers.d/rack] updated file contents /etc/sudoers.d/rack
+
+    - update content in file /etc/sudoers.d/rack from none to 97b38b
+        --- /etc/sudoers.d/rack	2014-02-05 18:46:57.353893037 +0000
+        +++ /tmp/chef-rendered-template20140205-2776-1wjw9ee	2014-02-05 18:46:57.357893037 +0000
+        @@ -1 +1,5 @@
+        +# This file is managed by Chef.
+        +# Do NOT modify this file directly.
+        +
+        +rack  ALL=(ALL) NOPASSWD:ALL[2014-02-05T18:46:57+00:00] INFO: template[/etc/sudoers.d/rack] owner changed to 0
+[2014-02-05T18:46:57+00:00] INFO: template[/etc/sudoers.d/rack] group changed to 0
+[2014-02-05T18:46:57+00:00] INFO: template[/etc/sudoers.d/rack] mode changed to 440
+
+    - change mode from '' to '0440'
+    - change owner from '' to 'root'
+           - change group from '' to 'root'
+
+
+
+  * template[/etc/sudoers.d/rack] action nothing[2014-02-05T18:46:57+00:00] INFO: Processing template[/etc/sudoers.d/rack] action nothing (/tmp/kitchen/cookbooks/sudo/providers/default.rb line 79)
+ (skipped due to action :nothing)
+Recipe: rackops-rolebook::default
+  * package[sysstat] action install[2014-02-05T18:46:57+00:00] INFO: Processing package[sysstat] action install (rackops-rolebook::default line 60)
+
+           - install version 10.0.5-1 of package sysstat
+
+         * package[dstat] action install[2014-02-05T18:47:04+00:00] INFO: Processing package[dstat] action install (rackops-rolebook::default line 60)
+
+           - install version 0.7.2-3 of package dstat
+
+         * package[screen] action install[2014-02-05T18:47:11+00:00] INFO: Processing package[screen] action install (rackops-rolebook::default line 60)
+
+           - install version 4.1.0~20120320gitdb59704-7 of package screen
+
+         * package[curl] action install[2014-02-05T18:47:18+00:00] INFO: Processing package[curl] action install (rackops-rolebook::default line 60)
+        (up to date)
+         * package[telnet] action install[2014-02-05T18:47:18+00:00] INFO: Processing package[telnet] action install (rackops-rolebook::default line 60)
+        (up to date)
+         * package[traceroute] action install[2014-02-05T18:47:18+00:00] INFO: Processing package[traceroute] action install (rackops-rolebook::default line 60)
+        (up to date)
+         * package[mtr] action install[2014-02-05T18:47:18+00:00] INFO: Processing package[mtr] action install (rackops-rolebook::default line 60)
+
+    - install version 0.82-3 of package mtr
+
+  * package[zip] action install[2014-02-05T18:47:43+00:00] INFO: Processing package[zip] action install (rackops-rolebook::default line 60)
+
+           - install version 3.0-6 of package zip
+
+         * package[vim] action install[2014-02-05T18:47:50+00:00] INFO: Processing package[vim] action install (rackops-rolebook::default line 60)
+
+    - install version 2:7.3.547-7 of package vim
+
+  * package[htop] action install[2014-02-05T18:48:01+00:00] INFO: Processing package[htop] action install (rackops-rolebook::default line 60)
+
+    - install version 1.0.1-1 of package htop
+
+  * file[/etc/profile.d/editor.sh] action create[2014-02-05T18:48:07+00:00] INFO: Processing file[/etc/profile.d/editor.sh] action create (rackops-rolebook::default line 66)
+[2014-02-05T18:48:07+00:00] INFO: file[/etc/profile.d/editor.sh] created file /etc/profile.d/editor.sh
+
+    - create new file /etc/profile.d/editor.sh[2014-02-05T18:48:07+00:00] INFO: file[/etc/profile.d/editor.sh] updated file contents /etc/profile.d/editor.sh
+
+    - update content in file /etc/profile.d/editor.sh from none to b1965e
+        --- /etc/profile.d/editor.sh	2014-02-05 18:48:07.345894738 +0000
+        +++ /tmp/.editor.sh20140205-2776-1y216v4	2014-02-05 18:48:07.349894738 +0000
+        @@ -1 +1,2 @@
+        +export EDITOR="/usr/bin/vim.basic"[2014-02-05T18:48:07+00:00] INFO: file[/etc/profile.d/editor.sh] owner changed to 0
+[2014-02-05T18:48:07+00:00] INFO: file[/etc/profile.d/editor.sh] group changed to 0
+[2014-02-05T18:48:07+00:00] INFO: file[/etc/profile.d/editor.sh] mode changed to 755
+
+    - change mode from '' to '0755'
+    - change owner from '' to 'root'
+    - change group from '' to 'root'
+
+[2014-02-05T18:48:07+00:00] INFO: template[/etc/ntp.conf] sending restart action to service[ntp] (delayed)
+Recipe: rackspace_ntp::default
+  * service[ntp] action restart[2014-02-05T18:48:07+00:00] INFO: Processing service[ntp] action restart (rackspace_ntp::default line 98)
+       [2014-02-05T18:48:09+00:00] INFO: service[ntp] restarted
+
+           - restart service service[ntp]
+
+       [2014-02-05T18:48:09+00:00] INFO: template[/etc/iptables/rules.v4] sending restart action to service[iptables-persistent] (delayed)
+       Recipe: rackspace_iptables::default
+         * service[iptables-persistent] action restart[2014-02-05T18:48:09+00:00] INFO: Processing service[iptables-persistent] action restart (rackspace_iptables::default line 60)
+       [2014-02-05T18:48:10+00:00] INFO: service[iptables-persistent] restarted
+
+           - restart service service[iptables-persistent]
+
+       [2014-02-05T18:48:10+00:00] INFO: Chef Run complete in 139.857206015 seconds
+       [2014-02-05T18:48:10+00:00] INFO: Running report handlers
+       [2014-02-05T18:48:10+00:00] INFO: Report handlers complete
+       Chef Client finished, 38 resources updated
+       Finished converging <default-debian-720> (3m1.47s).
+-----> Setting up <default-debian-720>...
+       Finished setting up <default-debian-720> (0m0.00s).
+-----> Verifying <default-debian-720>...
+       Finished verifying <default-debian-720> (0m0.00s).
+-----> Destroying <default-debian-720>...
+       [default] Forcing shutdown of VM...
+       [default] Destroying VM and associated drives...
+       Vagrant instance <default-debian-720> destroyed.
+       Finished destroying <default-debian-720> (0m7.78s).
+       Finished testing <default-debian-720> (4m9.03s).
+-----> Kitchen is finished. (4m9.38s)
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀
+
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀
+
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀ ssh rack@jenkins.rackops.org
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+The RSA host key for jenkins.rackops.org has changed,
+and the key for the corresponding IP address 23.253.79.122
+is unchanged. This could either mean that
+DNS SPOOFING is happening or the IP address for the host
+and its host key have changed at the same time.
+Offending key for IP in /Users/ryan.richard/.ssh/known_hosts:55
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+bf:8a:6e:27:36:cf:5c:c0:d6:4a:48:af:2c:da:73:7a.
+Please contact your system administrator.
+Add correct host key in /Users/ryan.richard/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /Users/ryan.richard/.ssh/known_hosts:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.2.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+5 packages can be updated.
+3 updates are security updates.
+
+# This file is managed by Chef. Manual changes will be overridden
+
+*** Chef Details ***
+Chef-Client: jenkins.rackops.org
+Hostname: 23-253-79-122.static.cloud-ips.com
+Chef Server: https://api.opscode.com/organizations/1824145-rackops
+Environment: jenkins
+Last Run: 2014-02-05 19:09:53 +0000
+
+Roles and Recipes:
+  Role: jenkins
+  Recipe: apt
+  Recipe: 1824145-jenkins
+
+
+********************
+
+
+Last login: Wed Feb  5 17:38:16 2014 from of2-nat1.sat6.rackspace.com
+rack@jenkins:~$ sudo -i
+root@jenkins:~# free -m
+             total       used       free     shared    buffers     cached
+Mem:          1998       1356        641          0        190        583
+-/+ buffers/cache:        582       1415
+Swap:            0          0          0
+root@jenkins:~# ps -ef | grep jenkins
+root      1147  1140  0 01:21 ?        00:00:00 runsv jenkins
+nobody    1153  1147  0 01:21 ?        00:00:00 logger -d -p local6.info -t [jenkins]
+jenkins   1155  1147  0 01:21 ?        00:05:12 java -jar jenkins.war -Xloggc:/var/log/jenkins/gclog.log --httpPort=8080
+root     19322 19148  0 19:15 pts/3    00:00:00 grep --color=auto jenkins
+root     27179 26347  0 16:30 pts/1    00:00:00 sudo su - jenkins
+jenkins  27180 27179  0 16:30 pts/1    00:00:00 su - jenkins
+jenkins  27181 27180  0 16:30 pts/1    00:00:00 -su
+root@jenkins:~# htop
+root@jenkins:~#
+root@jenkins:~# logout
+rack@jenkins:~$ logout
+Connection to jenkins.rackops.org closed.
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   .kitchen.yml
+#	modified:   Berksfile
+#	modified:   CHANGELOG.md
+#	modified:   Gemfile
+#	modified:   README.md
+#	modified:   Vagrantfile
+#	modified:   attributes/default.rb
+#	modified:   metadata.rb
+#	modified:   recipes/default.rb
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	.rubocop.yml
+#	Rakefile
+#	Strainerfile
+#	Thorfile
+#	recipes/acl.rb
+#	spec/
+no changes added to commit (use "git add" and/or "git commit -a")
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀ git add -A
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master± ⮀ git commit
+[master 3dfd9b8] update to 0.3. See changelog for more details
+ 15 files changed, 362 insertions(+), 104 deletions(-)
+ rewrite .kitchen.yml (72%)
+ create mode 100644 .rubocop.yml
+ create mode 100644 Rakefile
+ create mode 100644 Strainerfile
+ create mode 100644 Thorfile
+ create mode 100644 recipes/acl.rb
+ rewrite recipes/default.rb (67%)
+ create mode 100644 spec/spec_helper.rb
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master ⮀ git push
+warning: push.default is unset; its implicit value is changing in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the current behavior after the default changes, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Counting objects: 32, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (18/18), done.
+Writing objects: 100% (20/20), 6.21 KiB | 0 bytes/s, done.
+Total 20 (delta 3), reused 0 (delta 0)
+To https://github.com/rackops/rackops-rolebook
+   22732e7..3dfd9b8  master -> master
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master ⮀
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master ⮀ berks update
+Using rackops-rolebook (0.3.0) from metadata
+Installing rackspace-user (0.1.19) from github: 'rackspace-cookbooks/rackspace-user' with branch: 'master' over protocol: 'git'
+Installing sudo (2.2.1) from github: 'rackspace-cookbooks/sudo' with branch: 'master' over protocol: 'git'
+Installing chef-client (3.2.3) from github: 'opscode-cookbooks/chef-client' with branch: 'master' over protocol: 'git'
+Installing rackspace_ntp (2.0.1) from github: 'rackspace-cookbooks/rackspace_ntp' with branch: 'master' over protocol: 'git'
+Installing rackspace_motd (1.0.2) from github: 'rackspace-cookbooks/rackspace_motd' with branch: 'master' over protocol: 'git'
+Installing rackspace_iptables (1.2.0) from github: 'rackspace-cookbooks/rackspace_iptables' with branch: 'master' over protocol: 'git'
+Installing rackspace_apt (3.0.2) from github: 'rackspace-cookbooks/rackspace_apt' with branch: 'master' over protocol: 'git'
+Using cron (1.2.8)
+Using logrotate (1.4.0)
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master ⮀
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master ⮀
+ ~/rackspace_tools/rackops-git/rackops-rolebook ⮀ ⭠ master ⮀ cd ..
+ ~/rackspace_tools/rackops-git ⮀ ll
+total 8
+-rw-r--r--   1 ryan.richard  RACKSPACE\Domain Users  917 May 16  2013 Vagrantfile
+drwxr-xr-x   4 ryan.richard  RACKSPACE\Domain Users  136 Feb  2 18:29 authorized_keys
+drwxr-xr-x  20 ryan.richard  RACKSPACE\Domain Users  680 Sep  3 14:36 fog
+drwxr-xr-x  18 ryan.richard  RACKSPACE\Domain Users  612 Oct 28 14:53 jenkins-rolebook
+drwxr-xr-x   3 ryan.richard  RACKSPACE\Domain Users  102 Nov 13 18:04 knife-acl-setup
+drwxr-xr-x  16 ryan.richard  RACKSPACE\Domain Users  544 Jun 18  2013 motd
+drwxr-xr-x  23 ryan.richard  RACKSPACE\Domain Users  782 Feb  5 11:48 rackops-rolebook
+drwxr-xr-x  15 ryan.richard  RACKSPACE\Domain Users  510 Jul  2  2013 rackops.github.io
+drwxr-xr-x  10 ryan.richard  RACKSPACE\Domain Users  340 Oct  7 10:36 rackspace-cloud-backup
+drwxr-xr-x  23 ryan.richard  RACKSPACE\Domain Users  782 Jan  7 20:01 rackspace-user
+drwxr-xr-x  18 ryan.richard  RACKSPACE\Domain Users  612 Jan  8 14:59 rackspacecloud
+drwxr-xr-x  16 ryan.richard  RACKSPACE\Domain Users  544 Dec 18 13:32 statsd_graphite-rolebook
+ ~/rackspace_tools/rackops-git ⮀ cd rackspace-c
+ ✘ ⮀ ~/rackspace_tools/rackops-git ⮀ cd..
+ ~/rackspace_tools ⮀ cd rackspace-cookbooks/
+ ~/rackspace_tools/rackspace-cookbooks ⮀ git clone https://github.com/rackspace-cookbooks/newrelic.git
+Cloning into 'newrelic'...
+remote: Counting objects: 642, done.
+remote: Compressing objects: 100% (359/359), done.
+remote: Total 642 (delta 271), reused 608 (delta 252)
+Receiving objects: 100% (642/642), 134.12 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (271/271), done.
+Checking connectivity... done
+ ~/rackspace_tools/rackspace-cookbooks ⮀ cd newrelic
+ ~/rackspace_tools/rackspace-cookbooks/newrelic ⮀ ⭠ master ⮀ git checkout rackspace-rebuild
+error: pathspec 'rackspace-rebuild' did not match any file(s) known to git.
+ ✘ ⮀ ~/rackspace_tools/rackspace-cookbooks/newrelic ⮀ ⭠ master ⮀ git checkout rackspace-rework
+Branch rackspace-rework set up to track remote branch rackspace-rework from origin.
+Switched to a new branch 'rackspace-rework'
+ ~/rackspace_tools/rackspace-cookbooks/newrelic ⮀ ⭠ rackspace-rework ⮀ subl .
+ ~/rackspace_tools/rackspace-cookbooks/newrelic ⮀ ⭠ rackspace-rework ⮀ cd ..
+ ~/rackspace_tools/rackspace-cookbooks ⮀ cd php
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ master ⮀ git pull
+'remote: Counting objects: 79, done.
+remote: Compressing objects: 100% (40/40), done.
+remote: Total 79 (delta 37), reused 65 (delta 33)
+Unpacking objects: 100% (79/79), done.
+From https://github.com/rackspace-cookbooks/php
+   3e48cb6..a512c83  master     -> origin/master
+ * [new branch]      rackspace-rebuild -> origin/rackspace-rebuild
+Updating 3e48cb6..a512c83
+Fast-forward
+ attributes/default.rb |  2 +-
+ providers/pear.rb     |  8 ++------
+ recipes/source.rb     | 14 +++++++++++++-
+ 3 files changed, 16 insertions(+), 8 deletions(-)
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ master ⮀ 'git checlou
+ ✘ ⮀ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ master ⮀ git checkout rackspace-rebuild
+Branch rackspace-rebuild set up to track remote branch rackspace-rebuild from origin.
+Switched to a new branch 'rackspace-rebuild'
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild ⮀
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild ⮀ subl .
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild ⮀
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild± ⮀
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild± ⮀
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild± ⮀ mv recipes/source.rb source-deprecated
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild± ⮀ ll
+total 88
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users    405 Feb  7 14:08 Berksfile
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users    389 Feb  7 14:02 Gemfile
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users  10850 Jun 20  2013 LICENSE
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users   7380 Feb  7 14:09 README.md
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users   1835 Feb  7 14:06 Rakefile
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users   1628 Feb  7 13:56 Thorfile
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users    658 Feb  7 14:06 Vagrantfile
+drwxr-xr-x  3 ryan.richard  RACKSPACE\Domain Users    102 Feb  7 13:56 attributes
+drwxr-xr-x  3 ryan.richard  RACKSPACE\Domain Users    102 Feb  7 13:56 libraries
+-rw-r--r--  1 ryan.richard  RACKSPACE\Domain Users    405 Feb  7 13:56 metadata.rb
+drwxr-xr-x  4 ryan.richard  RACKSPACE\Domain Users    136 Feb  7 13:56 providers
+drwxr-xr-x  6 ryan.richard  RACKSPACE\Domain Users    204 Feb  7 14:11 recipes
+drwxr-xr-x  4 ryan.richard  RACKSPACE\Domain Users    136 Feb  7 13:56 resources
+drwxr-xr-x  3 ryan.richard  RACKSPACE\Domain Users    102 Feb  7 14:11 source-deprecated
+drwxr-xr-x  4 ryan.richard  RACKSPACE\Domain Users    136 Feb  7 13:56 spec
+drwxr-xr-x  7 ryan.richard  RACKSPACE\Domain Users    238 Jun 20  2013 templates
+ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild± ⮀ cat ../rsyslog
+cat: ../rsyslog: Is a directory
+ ✘ ⮀ ~/rackspace_tools/rackspace-cookbooks/php ⮀ ⭠ rackspace-rebuild± ⮀ cat ../rsyslog/chefignore
+# Put files/directories that should be ignored in this file when uploading
+# or sharing to the community site.
+# Lines that start with '# ' are comments.
+
+# OS generated files #
+######################
+.DS_Store
+Icon?
+nohup.out
+ehthumbs.db
+Thumbs.db
+
+# SASS #
+########
+.sass-cache
+
+# EDITORS #
+###########
+\#*
+.#*
+*~
+*.sw[a-z]
+*.bak
+REVISION
+TAGS*
+tmtags
+*_flymake.*
+*_flymake
+*.tmproj
+.project
+.settings
+mkmf.log
+
+## COMPILED ##
+##############
+a.out
+*.o
+*.pyc
+*.so
+*.com
+*.class
+*.dll
+*.exe
+*/rdoc/
+
+# Testing #
+###########
+.watchr
+.rspec
+spec/*
+spec/fixtures/*
+test/*
+features/*
+Guardfile
+Procfile
+
+# SCM #
+#######
+.git
+*/.git
+.gitignore
+.gitmodules
+.gitconfig
+.gitattributes
+.svn
+*/.bzr/*
+*/.hg/*
+*/.svn/*
+
+# Berkshelf #
+#############
+Berksfile
+Berksfile.lock
+cookbooks/*
+tmp
+
+# Cookbooks #
+#############
+CONTRIBUTING
+CHANGELOG*
+
+# Strainer #
+############
+Colanderfile
+Strainerfile
+.colander
+.strainer
+
+# Vagrant #
+###########
+.vagrant
+Vagrantfile
+
+# Travis #
+##########
+.travis.yml
+
+# deprecated#
+#############
+source-deprecated

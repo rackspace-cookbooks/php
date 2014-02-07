@@ -10,16 +10,13 @@ Requirements
 - CentOS, Red Hat
 
 ### Cookbooks 
-- build-essential
+- rackspace_build-essential
+- rackspace_yum
 - xml
 - mysql
 
-These cookbooks are only used when building PHP from source (which is deprecated).
-
-
 Attributes
 ----------
-- `node['rackspace_php']['install_method']` = method to install php with, default `package`.
 - `node['rackspace_php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
 - `node['rackspace_php']['version_number']` = sets version of PHP to install. This is 5.3 by default but can be changed to 5.4 or 5.5 for RHEL/CentOS installs.
 - `node['rackspace_php']['additional_modules']` = is a list of package named to install additional non-default PHP modules. Common usage include php-mysql etc. ensure the names are corrrect the the specific OS.
@@ -163,17 +160,6 @@ If `node['rackspace_php']['version_number']` is set to other than 5.3 (such as 5
 ### pear
 This package ensure that 'pear.php.net' and 'pecl.php.net' are updated and current on the server.
 
-
-
-Deprecated Recipes
-------------------
-The following recipes are deprecated and will be removed from a future version of this cookbook.
-
-### source
-This recipe installs PHP from source.
-
-
-
 Usage
 -----
 Simply include the `rackspace_php` recipe where ever you would like php installed.  To install verison 5.5 vice 5.3 on a CnetOS 6.x server override the `node['rackspace_php']['version_number']` attribute with in a role:
@@ -190,6 +176,14 @@ run_list(
   "recipe[rackspace_php]"
 )
 ```
+
+Contributing
+------------
+* Please see the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
+
+Testing
+-------
+* Please see the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
 
 
 License & Authors

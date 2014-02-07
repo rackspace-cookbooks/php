@@ -10,7 +10,7 @@ Requirements
 - CentOS, Red Hat
 
 ### Cookbooks 
-- rackspace_build-essential
+- rackspace_build_essential
 - rackspace_yum
 - xml
 - mysql

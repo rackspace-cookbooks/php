@@ -1,26 +1,25 @@
-php Cookbook
+rackspace_php Cookbook
 ============
-Installs and configures PHP 5.3 and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages along with PECL channels.
+Installs and configures PHP 5.3 (by default) and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages along with PECL channels. Can also install PHP 5.4 and 5.5 on RHEL/Centos systems.
 
 
 Requirements
 ------------
 ### Platforms
 - Debian, Ubuntu
-- CentOS, Red Hat, Fedora, Amazon Linux
+- CentOS, Red Hat
 
-### Cookbooks
-- build-essential
+### Cookbooks 
+- rackspace_build_essential
+- rackspace_yum
 - xml
 - mysql
 
-These cookbooks are only used when building PHP from source.
-
-
 Attributes
 ----------
-- `node['php']['install_method']` = method to install php with, default `package`.
-- `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
+- `node['rackspace_php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
+- `node['rackspace_php']['version_number']` = sets version of PHP to install. This is 5.3 by default but can be changed to 5.4 or 5.5 for RHEL/CentOS installs.
+- `node['rackspace_php']['additional_modules']` = is a list of package named to install additional non-default PHP modules. Common usage include php-mysql etc. ensure the names are corrrect the the specific OS.
 
 The file also contains the following attribute types:
 
@@ -35,7 +34,7 @@ This cookbook includes LWRPs for managing:
 - PEAR channels
 - PEAR/PECL packages
 
-### `php_pear_channel`
+### `rackspace_php_pear_channel`
 [PEAR Channels](http://pear.php.net/manual/en/guide.users.commandline.channels.php) are alternative sources for PEAR packages.  This LWRP provides and easy way to manage these channels.
 
 #### Actions
@@ -51,7 +50,7 @@ This cookbook includes LWRPs for managing:
 #### Examples
 ```ruby
 # discover the horde channel
-php_pear_channel "pear.horde.org" do
+rackspace_php_pear_channel "pear.horde.org" do
   action :discover
 end
 
@@ -60,23 +59,23 @@ remote_file "#{Chef::Config[:file_cache_path]}/symfony-channel.xml" do
   source "http://pear.symfony-project.com/channel.xml"
   mode 0644
 end
-php_pear_channel "symfony" do
+rackspace_php_pear_channel "symfony" do
   channel_xml "#{Chef::Config[:file_cache_path]}/symfony-channel.xml"
   action :add
 end
 
 # update the main pear channel
-php_pear_channel 'pear.php.net' do
+rackspace_php_pear_channel 'pear.php.net' do
   action :update
 end
 
 # update the main pecl channel
-php_pear_channel 'pecl.php.net' do
+rackspace_php_pear_channel 'pecl.php.net' do
   action :update
 end
 ```
 
-### `php_pear`
+### `rackspace_php_pear`
 [PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system.  As such this LWRP is clever enough to abstract away the small differences and can be used for managing either.  This LWRP also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.
 
 #### Actions
@@ -96,25 +95,25 @@ end
 #### Examples
 ```ruby
 # upgrade a pear
-php_pear "XML_RPC" do
+rackspace_php_pear "XML_RPC" do
   action :upgrade
 end
 
 
 # install a specific version
-php_pear "XML_RPC" do
+rackspace_php_pear "XML_RPC" do
   version "1.5.4"
   action :install
 end
 
 
 # install the mongodb pecl
-php_pear "mongo" do
+rackspace_php_pear "mongo" do
   action :install
 end
 
 # install the xdebug pecl
-php_pear "xdebug" do
+rackspace_php_pear "xdebug" do
   # Specify that xdebug.so must be loaded as a zend extension
   zend_extensions ['xdebug.so']
   action :install
@@ -122,7 +121,7 @@ end
 
 
 # install apc pecl with directives
-php_pear "apc" do
+rackspace_php_pear "apc" do
   action :install
   directives(:shm_size => 128, :enable_cli => 1)
 end
@@ -130,10 +129,10 @@ end
 
 # install the beta version of Horde_Url
 # from the horde channel
-hc = php_pear_channel "pear.horde.org" do
+hc = rackspace_php_pear_channel "pear.horde.org" do
   action :discover
 end
-php_pear "Horde_Url" do
+rackspace_php_pear "Horde_Url" do
   preferred_state "beta"
   channel hc.channel_name
   action :install
@@ -141,10 +140,10 @@ end
 
 
 # install the YAML pear from the symfony project
-sc = php_pear_channel "pear.symfony-project.com" do
+sc = rackspace_php_pear_channel "pear.symfony-project.com" do
   action :discover
 end
-php_pear "YAML" do
+rackspace_php_pear "YAML" do
   channel sc.channel_name
   action :install
 end
@@ -154,70 +153,48 @@ end
 Recipes
 -------
 ### default
-Include the default recipe in a run list, to get `php`.  By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
+Include the default recipe in a run list, to get PHP.  By default PHP is installed from packages but this can be changed by using the `install_method` attribute (keep in mind the source method is deprecated and no longer supported) . This recipe installs PHP 5.3 on both Redhat and Debian family of OS's.
 
-### package
-This recipe installs PHP from packages.
+If `node['rackspace_php']['version_number']` is set to other than 5.3 (such as 5.4 or 5.5) Then it will install these version of PHP but only on RHEL and CentOS servers. Debian and Ubuntu will only instal the default PHP version 5.3
 
-### source
-This recipe installs PHP from source.
-
-
-Deprecated Recipes
-------------------
-The following recipes are deprecated and will be removed from a future version of this cookbook.
-
-- `module_apc`
-- `module_curl`
-- `module_fileinfo`
-- `module_fpdf`
-- `module_gd`
-- `module_ldap`
-- `module_memcache`
-- `module_mysql`
-- `module_pgsql`
-- `module_sqlite3`
-
-The installation of the php modules in these recipes can now be accomplished by installing from a native package or via the new php_pear LWRP.  For example, the functionality of the `module_memcache` recipe can be enabled in the following ways:
-
-```ruby
-# using apt
-package "php5-memcache" do
-  action :install
-end
-
-# using pear LWRP
-php_pear "memcache" do
-  action :install
-end
-```
-
+### pear
+This package ensure that 'pear.php.net' and 'pecl.php.net' are updated and current on the server.
 
 Usage
 -----
-Simply include the `php` recipe where ever you would like php installed.  To install from source override the `node['php']['install_method']` attribute with in a role:
+Simply include the `rackspace_php` recipe where ever you would like php installed.  To install verison 5.5 vice 5.3 on a CnetOS 6.x server override the `node['rackspace_php']['version_number']` attribute with in a role:
 
 ```ruby
-name "php"
-description "Install php from source"
+name "rackspace_php"
+description "Install php 5.5"
 override_attributes(
-  "php" => {
-    "install_method" => "source"
+  "rackspace_php" => {
+    "version_number" => "5.5"
   }
 )
 run_list(
-  "recipe[php]"
+  "recipe[rackspace_php]"
 )
 ```
+
+Contributing
+------------
+* Please see the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
+
+Testing
+-------
+* Please see the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
 
 
 License & Authors
 -----------------
 - Author:: Seth Chisamore (<schisamo@opscode.com>)
 - Author:: Joshua Timberman (<joshua@opscode.com>)
+- Author:: Christopher Coffey (<christopher.coffey@rackspace.com>)
 
 ```text
 Copyright:: 2011, Opscode, Inc
+Copyright:: 2014, Rackspace US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

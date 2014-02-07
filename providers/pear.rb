@@ -1,9 +1,12 @@
 #
 # Author:: Seth Chisamore <schisamo@opscode.com>
-# Cookbook Name:: php
+# Author:: Christopher Coffey <christopher.coffey@rackspace.com>
+#
+# Cookbook Name:: rackspace_php
 # Provider:: pear_package
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
+# Copyright:: 2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,29 +35,27 @@ end
 
 action :install do
   # If we specified a version, and it's not the current version, move to the specified version
-  if @new_resource.version != nil && @new_resource.version != @current_resource.version
+  if @new_resource.version.nil? && @new_resource.version != @current_resource.version
     install_version = @new_resource.version
   end
 
   # If it's not installed at all or an upgrade, install it
-  if install_version || @current_resource.version == nil
+  if install_version || @current_resource.version.nil?
     description = "install package #{@new_resource} #{install_version}"
     converge_by(description) do
-       info_output = "Installing #{@new_resource}"
-       info_output << " version #{install_version}" if install_version and !install_version.empty?
-       Chef::Log.info(info_output)
-       status = install_package(@new_resource.package_name, install_version)
+      info_output = "Installing #{@new_resource}"
+      info_output << " version #{install_version}" if install_version && !install_version.empty?
+      Chef::Log.info(info_output)
     end
   end
 end
 
 action :upgrade do
   if @current_resource.version != candidate_version
-    orig_version = @current_resource.version || "uninstalled"
+    orig_version = @current_resource.version || 'uninstalled'
     description = "upgrade package #{@new_resource} version from #{orig_version} to #{candidate_version}"
     converge_by(description) do
-       Chef::Log.info("Upgrading #{@new_resource} version from #{orig_version} to #{candidate_version}")
-       status = upgrade_package(@new_resource.package_name, candidate_version)
+      Chef::Log.info("Upgrading #{@new_resource} version from #{orig_version} to #{candidate_version}")
     end
   end
 end
@@ -63,8 +64,8 @@ action :remove do
   if removing_package?
     description = "remove package #{@new_resource}"
     converge_by(description) do
-       Chef::Log.info("Removing #{@new_resource}")
-       remove_package(@current_resource.package_name, @new_resource.version)
+      Chef::Log.info("Removing #{@new_resource}")
+      remove_package(@current_resource.package_name, @new_resource.version)
     end
   else
   end
@@ -74,8 +75,8 @@ action :purge do
   if removing_package?
     description = "purge package #{@new_resource}"
     converge_by(description) do
-       Chef::Log.info("Purging #{@new_resource}")
-       purge_package(@current_resource.package_name, @new_resource.version)
+      Chef::Log.info("Purging #{@new_resource}")
+      purge_package(@current_resource.package_name, @new_resource.version)
     end
   end
 end
@@ -93,7 +94,7 @@ def removing_package?
 end
 
 def expand_options(options)
-  options ? " #{options}" : ""
+  options ? ' #{options}' : ' '
 end
 
 # these methods are the required overrides of
@@ -101,7 +102,7 @@ end
 # so refactoring into core Chef should be easy
 
 def load_current_resource
-  @current_resource = Chef::Resource::PhpPear.new(@new_resource.name)
+  @current_resource = Chef::Resource::RackspacePhpPear.new(@new_resource.name)
   @current_resource.package_name(@new_resource.package_name)
   @bin = 'pear'
   if pecl?
@@ -119,7 +120,6 @@ end
 
 def current_installed_version
   @current_installed_version ||= begin
-    v = nil
     version_check_cmd = "#{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} list#{expand_channel(can_haz(@new_resource, "channel"))}"
     p = shell_out(version_check_cmd)
     response = nil
@@ -132,7 +132,8 @@ end
 
 def candidate_version
   @candidate_version ||= begin
-    candidate_version_cmd = "#{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
+    candidate_version_cmd = "#{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")}
+                             search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
     p = shell_out(candidate_version_cmd)
     response = nil
     if p.stdout =~ /\.?Matched packages/i
@@ -143,20 +144,22 @@ def candidate_version
 end
 
 def install_package(name, version)
-  command = "echo \"\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
-  command << "-#{version}" if version and !version.empty?
+  command = "echo \"\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")}
+             install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
+  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 def upgrade_package(name, version)
-  pear_shell_out("echo \"\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} upgrade -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
-  manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
+  pear_shell_out("echo \"\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")}
+                  upgrade -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
+  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 def remove_package(name, version)
   command = "#{@bin} uninstall #{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
-  command << "-#{version}" if version and !version.empty?
+  command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :delete) if pecl?
 end
@@ -175,16 +178,16 @@ def purge_package(name, version)
 end
 
 def expand_channel(channel)
-  channel ? " -c #{channel}" : ""
+  channel ? " -c #{channel}" : ' '
 end
 
 def prefix_channel(channel)
-  channel ? "#{channel}/" : ""
+  channel ? "#{channel}/" : ' '
 end
 
-def get_extension_dir()
+def getextension_dir
   @extension_dir ||= begin
-    p = shell_out("php-config --extension-dir")
+    p = shell_out('php-config --extension-dir')
     p.stdout.strip
   end
 end
@@ -201,27 +204,27 @@ def get_extension_files(name)
 end
 
 def manage_pecl_ini(name, action, directives, zend_extensions)
-  ext_prefix = get_extension_dir()
+  ext_prefix = getextension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
   files = get_extension_files(name)
 
-  extensions = Hash[ files.map { |filepath|
+  extensions = Hash[ files.map { |filepath|   # rubocop:disable Blocks
     rel_file = filepath.clone
     rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
 
     zend = zend_extensions.include?(rel_file)
 
-    [ (zend ? filepath : rel_file) , zend ]
+    [(zend ? filepath : rel_file) , zend]
   }]
 
   template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
-    source "extension.ini.erb"
-    cookbook "php"
-    owner "root"
-    group "root"
-    mode "0644"
-    variables(:name => name, :extensions => extensions, :directives => directives)
+    source 'extension.ini.erb'
+    cookbook 'php'
+    owner 'root'
+    group 'root'
+    mode '0644'
+    variables(name: name, extensions: extensions, directives: directives)
     action action
   end
 end
@@ -250,21 +253,20 @@ def pecl?
   @pecl ||= begin
     # search as a pear first since most 3rd party channels will report pears as pecls!
     search_cmd = "pear -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-    unless grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
+    if !grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
       false
     else
       # fall back and search as a pecl
       search_cmd = "pecl -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-      unless grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
+      if !grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
         true
       else
-        raise "Package #{@new_resource.package_name} not found in either PEAR or PECL."
+        fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
       end
     end
   end
 end
 
-# TODO remove when provider is moved into Chef core
 # this allows PhpPear to work with Chef::Resource::Package
 def can_haz(resource, attribute_name)
   resource.respond_to?(attribute_name) ? resource.send(attribute_name) : nil

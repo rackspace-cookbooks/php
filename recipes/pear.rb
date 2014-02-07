@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Cookbook Name:: php
-# Recipe:: module_curl
+# Author::  Christopher Coffey (<christopher.coffey@rackspace.com>)
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Cookbook Name:: rackspace_php
+# Recipe:: pear
+#
+# Copyright 2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe 'rackspace_php::default'
 
-case node['platform_family']
-when "rhel", "fedora"
-  # centos php compiled with curl
-when "debian"
-  package "php5-curl" do
-    action :upgrade
-  end
+rackspace_php_pear_channel 'pear.php.net' do
+  action :update
+end
+
+rackspace_php_pear_channel 'pecl.php.net' do
+  action :update
 end

@@ -1,9 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Cookbook Name:: php
-# Libraries:: helpers
+# Author:: Christopher Coffey (<christopher.coffey@rackspace.com>)
+# Cookbook Name:: rackspace_php
+# Recipe:: debian_package
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2011, Opscode, Inc.
+# Copyright 2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +19,16 @@
 # limitations under the License.
 #
 
-def el5_range
-  (0..99).to_a.map{|i| "5.#{i}"}
+node['rackspace_php']['packages'].each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+template "#{node['rackspace_php']['conf_dir']}/php.ini" do
+  source 'php.ini.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(directives: node['rackspace_php']['directives'])
 end

@@ -24,7 +24,7 @@
 default['rackspace_php']['version_number'] = '5.3'
 default['rackspace_php']['additional_modules'] = []
 
-default['rackspace_php']['source']['directives'] = {}
+default['rackspace_php']['directives'] = {}
 
 case node['platform_family']
 when 'rhel'

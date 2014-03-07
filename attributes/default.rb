@@ -25,20 +25,30 @@ default['rackspace_php']['version_number'] = '5.3'
 default['rackspace_php']['additional_modules'] = []
 
 default['rackspace_php']['directives'] = {}
+default['rackspace_php']['fpm']['directives']['conf'] = {}
+default['rackspace_php']['fpm']['directives']['ini'] = {}
+
+default['rackspace_php']['fpm']['enabled'] = false
 
 case node['platform_family']
 when 'rhel'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
-  default['rackspace_php']['conf_dir']      = '/etc'
-  default['rackspace_php']['ext_conf_dir']  = '/etc/php.d'
-  default['rackspace_php']['fpm_user']      = 'nobody'
-  default['rackspace_php']['fpm_group']     = 'nobody'
-  default['rackspace_php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
-  default['rackspace_php']['packages']      = %w(php php-devel php-cli php-pear)
+  default['rackspace_php']['conf_dir']            = '/etc'
+  default['rackspace_php']['ext_conf_dir']        = '/etc/php.d'
+  default['rackspace_php']['fpm']['conf_dir']     = '/etc'
+  default['rackspace_php']['fpm']['ext_conf_dir'] = '/etc/php-fpm.d/conf.d'
+  default['rackspace_php']['ext_dir']             = "/usr/#{lib_dir}/php/modules"
+  default['rackspace_php']['packages']            = %w(php php-devel php-cli php-pear)
+  if node['rackspace_php']['fpm']['enabled'] == true
+    default['rackspace_php']['packages']          = %w(php-cli php-fpm php-pear php-devel)
+  end
 when 'debian'
-  default['rackspace_php']['conf_dir']      = '/etc/php5/cli'
-  default['rackspace_php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['rackspace_php']['fpm_user']      = 'www-data'
-  default['rackspace_php']['fpm_group']     = 'www-data'
-  default['rackspace_php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
+  default['rackspace_php']['conf_dir']            = '/etc/php5/cli'
+  default['rackspace_php']['ext_conf_dir']        = '/etc/php5/conf.d'
+  default['rackspace_php']['fpm']['conf_dir']     = '/etc/php5/fpm'
+  default['rackspace_php']['fpm']['ext_conf_dir'] = '/etc/php5/fpm/conf.d'
+  default['rackspace_php']['packages']            = %w(php5-cgi php5 php5-dev php5-cli php-pear)
+  if node['rackspace_php']['fpm']['enabled'] == true
+    default['rackspace_php']['packages']          = %w(php5-fpm php5-dev php-pear)
+  end
 end

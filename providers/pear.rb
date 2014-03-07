@@ -203,7 +203,7 @@ def get_extension_files(name)
   files
 end
 
-def manage_pecl_ini(name, action, directives, zend_extensions)
+def manage_pecl_ini(name, act, directives, zend_extensions)
   ext_prefix = getextension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
@@ -218,14 +218,32 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     [(zend ? filepath : rel_file) , zend]
   }]
 
-  template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
+  directory "#{node['rackspace_php']['fpm']['ext_conf_dir']}" do
+    owner 'root'
+    group 'root'
+    mode 0755
+    action :create
+    only_if { node['rackspace_php']['fpm']['enabled'] == true }
+  end
+  template "#{node['rackspace_php']['fpm']['ext_conf_dir']}/#{name}.ini" do
     source 'extension.ini.erb'
-    cookbook 'php'
+    cookbook 'rackspace_php'
     owner 'root'
     group 'root'
     mode '0644'
     variables(name: name, extensions: extensions, directives: directives)
-    action action
+    action act
+    only_if { node['rackspace_php']['fpm']['enabled'] == true }
+  end
+
+  template "#{node['rackspace_php']['ext_conf_dir']}/#{name}.ini" do
+    source 'extension.ini.erb'
+    cookbook 'rackspace_php'
+    owner 'root'
+    group 'root'
+    mode '0644'
+    variables(name: name, extensions: extensions, directives: directives)
+    action act
   end
 end
 

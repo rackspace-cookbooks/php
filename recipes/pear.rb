@@ -27,3 +27,9 @@ end
 rackspace_php_pear_channel 'pecl.php.net' do
   action :update
 end
+
+node['rackspace_php']['additional_modules'].each do |pkg|
+  rackspace_php_pear pkg do
+    action :install
+  end
+end

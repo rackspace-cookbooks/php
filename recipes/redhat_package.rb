@@ -75,3 +75,19 @@ template "#{node['rackspace_php']['conf_dir']}/php.ini" do
   mode '0644'
   variables(directives: node['rackspace_php']['directives'])
 end
+
+#fpm
+template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
+  source 'php-fpm.conf.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(directives: node['rackspace_php']['fpm']['directives']['conf'])
+  only_if { node['rackspace_php']['fpm']['enabled'] == true }
+end
+
+service 'php5-fpm' do
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable, :start ]
+  only_if { node['rackspace_php']['fpm']['enabled'] == true }
+end

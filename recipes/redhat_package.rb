@@ -76,7 +76,7 @@ template "#{node['rackspace_php']['conf_dir']}/php.ini" do
   variables(directives: node['rackspace_php']['directives'])
 end
 
-#fpm
+# fpm
 template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
   source 'php-fpm.conf.erb'
   owner 'root'
@@ -87,7 +87,7 @@ template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
 end
 
 service 'php5-fpm' do
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
+  supports ['status'] => true, ['restart'] => true, ['reload'] => true
+  action [:enable, :start]
   only_if { node['rackspace_php']['fpm']['enabled'] == true }
 end

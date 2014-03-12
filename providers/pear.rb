@@ -218,7 +218,7 @@ def manage_pecl_ini(name, act, directives, zend_extensions)
     [(zend ? filepath : rel_file) , zend]
   }]
 
-  directory "#{node['rackspace_php']['fpm']['ext_conf_dir']}" do
+  directory node['rackspace_php']['fpm']['ext_conf_dir'] do
     owner 'root'
     group 'root'
     mode 0755

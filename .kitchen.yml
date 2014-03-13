@@ -40,6 +40,7 @@ suites:
 - name: php_5.5
   run_list:
   - recipe[rackspace_php]
+  - recipe[rackspace_apt]
   attributes:
     rackspace_php:
       version_number: 5.5

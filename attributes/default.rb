@@ -54,3 +54,7 @@ when 'debian'
     default['rackspace_php']['packages']          = %w(php5-cgi php5 php5-dev php5-cli php-pear php5-fpm)
   end
 end
+
+default['rackspace_php']['templates']['php.ini'] = 'rackspace_php'
+default['rackspace_php']['templates']['php-fpm.conf'] = 'rackspace_php'
+

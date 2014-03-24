@@ -26,6 +26,7 @@ node['rackspace_php']['packages'].each do |pkg|
 end
 
 template "#{node['rackspace_php']['conf_dir']}/php.ini" do
+  cookbook node['rackspace_php']['templates']['php.ini']
   source 'php.ini.erb'
   owner 'root'
   group 'root'
@@ -35,6 +36,7 @@ end
 
 # fpm
 template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
+  cookbook node['rackspace_php']['templates']['php-fpm.conf']
   source 'php-fpm.conf.erb'
   owner 'root'
   group 'root'
@@ -44,6 +46,7 @@ template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
 end
 
 template "#{node['rackspace_php']['fpm']['conf_dir']}/php.ini" do
+  cookbook node['rackspace_php']['templates']['php.ini']
   source 'php.ini.erb'
   owner 'root'
   group 'root'

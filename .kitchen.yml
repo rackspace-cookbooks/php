@@ -46,3 +46,11 @@ suites:
   excludes:
   - ubuntu-12.04
   - debian-7.2.0
+
+- name: php-fpm
+  run_list:
+  - recipe[rackspace_php]
+  attributes:
+    rackspace_php:
+        fpm:
+          enabled: true

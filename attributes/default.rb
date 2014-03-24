@@ -35,20 +35,22 @@ when 'rhel'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['rackspace_php']['conf_dir']            = '/etc'
   default['rackspace_php']['ext_conf_dir']        = '/etc/php.d'
-  default['rackspace_php']['fpm']['conf_dir']     = '/etc'
-  default['rackspace_php']['fpm']['ext_conf_dir'] = '/etc/php-fpm.d/conf.d'
   default['rackspace_php']['ext_dir']             = "/usr/#{lib_dir}/php/modules"
   default['rackspace_php']['packages']            = %w(php php-devel php-cli php-pear)
+  default['rackspace_php']['fpm']['conf_dir']     = '/etc'
+  default['rackspace_php']['fpm']['ext_conf_dir'] = '/etc/php-fpm.d/conf.d'
+  default['rackspace_php']['fpm']['service_name'] = 'php-fpm'
   if node['rackspace_php']['fpm']['enabled'] == true
-    default['rackspace_php']['packages']          = %w(php-cli php-fpm php-pear php-devel)
+    default['rackspace_php']['packages']          = %w(php php-devel php-cli php-pear php-fpm)
   end
 when 'debian'
   default['rackspace_php']['conf_dir']            = '/etc/php5/cli'
   default['rackspace_php']['ext_conf_dir']        = '/etc/php5/conf.d'
+  default['rackspace_php']['packages']            = %w(php5-cgi php5 php5-dev php5-cli php-pear)
   default['rackspace_php']['fpm']['conf_dir']     = '/etc/php5/fpm'
   default['rackspace_php']['fpm']['ext_conf_dir'] = '/etc/php5/fpm/conf.d'
-  default['rackspace_php']['packages']            = %w(php5-cgi php5 php5-dev php5-cli php-pear)
+  default['rackspace_php']['fpm']['service_name'] = 'php5-fpm'
   if node['rackspace_php']['fpm']['enabled'] == true
-    default['rackspace_php']['packages']          = %w(php5-fpm php5-dev php-pear)
+    default['rackspace_php']['packages']          = %w(php5-cgi php5 php5-dev php5-cli php-pear php5-fpm)
   end
 end

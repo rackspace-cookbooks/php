@@ -86,7 +86,7 @@ template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
   only_if { node['rackspace_php']['fpm']['enabled'] == true }
 end
 
-service 'php5-fpm' do
+service node['rackspace_php']['fpm']['service_name'] do
   supports ['status'] => true, ['restart'] => true, ['reload'] => true
   action [:enable, :start]
   only_if { node['rackspace_php']['fpm']['enabled'] == true }

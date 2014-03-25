@@ -27,7 +27,7 @@ The file also contains the following attribute types:
 To enable php-fpm The following is recommended:
 * Set `node.default['rackspace_php']['fpm']['enabled'] = true`
 * If you need php5.4 or php5.5 and php-fpm, you'll need to populate the package yourself:
- *Add `php-fpm` to the packages hash: `node.set['rackspace_php']['packages'] = %w(php54 php54-devel php54-cli php54-pear php54-fpm)`
+ *Add `php-fpm` to the packages hash: i.e. `node.set['rackspace_php']['packages'] = %w(php54 php54-devel php54-cli php54-pear php54-fpm)`
 
 Resource/Provider
 -----------------

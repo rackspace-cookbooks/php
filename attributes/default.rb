@@ -57,4 +57,3 @@ end
 
 default['rackspace_php']['templates']['php.ini'] = 'rackspace_php'
 default['rackspace_php']['templates']['php-fpm.conf'] = 'rackspace_php'
-

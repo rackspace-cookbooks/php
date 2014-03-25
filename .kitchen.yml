@@ -41,7 +41,7 @@ suites:
     rackspace_php:
       version_number: 5.5
 
-- name: php-fpm
+- name: phpfpm
   run_list:
   - recipe[rackspace_php]
   attributes:

@@ -31,7 +31,10 @@ template "#{node['rackspace_php']['conf_dir']}/php.ini" do
   owner 'root'
   group 'root'
   mode '0644'
-  variables(directives: node['rackspace_php']['directives'])
+  variables(
+    directives: node['rackspace_php']['directives'],
+    cookbook_name: cookbook_name
+  )
 end
 
 # fpm
@@ -41,7 +44,10 @@ template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
   owner 'root'
   group 'root'
   mode '0644'
-  variables(directives: node['rackspace_php']['fpm']['directives']['conf'])
+  variables(
+    directives: node['rackspace_php']['fpm']['directives']['conf'],
+    cookbook_name: cookbook_name
+  )
   only_if { node['rackspace_php']['fpm']['enabled'] == true }
 end
 
@@ -51,7 +57,10 @@ template "#{node['rackspace_php']['fpm']['conf_dir']}/php.ini" do
   owner 'root'
   group 'root'
   mode '0644'
-  variables(directives: node['rackspace_php']['fpm']['directives']['ini'])
+  variables(
+    directives: node['rackspace_php']['fpm']['directives']['ini'],
+    cookbook_name: cookbook_name
+  )
   only_if { node['rackspace_php']['fpm']['enabled'] == true }
 end
 

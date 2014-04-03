@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-php_fpm_conf = node['rackspace_php']['fpm']['conf_dir'] + "/php-fpm.conf"
+php_fpm_conf = node['rackspace_php']['fpm']['conf_dir'] + '/php-fpm.conf'
 php_fpm_service = node['rackspace_php']['fpm']['service_name']
 
 case node['platform_family']
@@ -36,11 +36,11 @@ when 'rhel'
       cookbook_name: cookbook_name
     )
   end
-  
+
   service php_fpm_service do
     supports ['status'] => true, ['restart'] => true, ['reload'] => true
     action [:enable, :start]
-end
+  end
 when 'debian'
 # fpm
   template php_fpm_conf do
@@ -54,19 +54,7 @@ when 'debian'
       cookbook_name: cookbook_name
     )
   end
-  
-#  template "#{node['rackspace_php']['fpm']['conf_dir']}/php.ini" do
-#    cookbook node['rackspace_php']['templates']['php.ini']
-#    source 'php.ini.erb'
-#    owner 'root'
-#    group 'root'
-#    mode '0644'
-#    variables(
-#      directives: node['rackspace_php']['fpm']['directives']['ini'],
-#      cookbook_name: cookbook_name
-#    )
-#  end
-  
+
   service php_fpm_service do
     supports ['status'] => true, ['restart'] => true, ['reload'] => true
     action [:enable, :start]

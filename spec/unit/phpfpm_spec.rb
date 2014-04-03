@@ -23,7 +23,6 @@ describe 'rackspace_php::fpm' do
     end
   end
 
-
   context 'platform family - rhel' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'centos', version: '6.4') do |node|

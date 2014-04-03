@@ -41,10 +41,23 @@ suites:
     rackspace_php:
       version_number: 5.5
 
-- name: phpfpm
+- name: phpfpm-redhat
   run_list:
   - recipe[rackspace_php]
   attributes:
     rackspace_php:
         fpm:
           enabled: true
+  includes:
+  - centos-6.4
+
+- name: phpfpm-debian
+  run_list:
+  - recipe[rackspace_php]
+  attributes:
+    rackspace_php:
+        fpm:
+          enabled: true
+  includes:
+  - debian-7.2.0
+  - ubuntu-12.04

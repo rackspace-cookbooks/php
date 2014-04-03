@@ -22,6 +22,8 @@
 
 include_recipe 'rackspace_yum'
 
+php_conf = node['rackspace_php']['conf_dir'] + '/php.ini'
+
 case node['rackspace_php']['version_number']
 when '5.3'
   node['rackspace_php']['packages'].each do |pkg|
@@ -68,7 +70,7 @@ when '5.5'
   end
 end
 
-template "#{node['rackspace_php']['conf_dir']}/php.ini" do
+template php_conf do
   cookbook node['rackspace_php']['templates']['php.ini']
   source 'php.ini.erb'
   owner 'root'

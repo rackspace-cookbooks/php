@@ -19,44 +19,23 @@
 # limitations under the License.
 #
 
+# These are needed to make chefspec easier/happier. These attributes are set per OS in attributes/default.rb
 php_fpm_conf = node['rackspace_php']['fpm']['conf_dir'] + '/php-fpm.conf'
 php_fpm_service = node['rackspace_php']['fpm']['service_name']
 
-case node['platform_family']
-when 'rhel'
-# fpm
-  template php_fpm_conf do
-    cookbook node['rackspace_php']['templates']['php-fpm.conf']
-    source 'php-fpm.conf.erb'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(
-      directives: node['rackspace_php']['fpm']['directives']['conf'],
-      cookbook_name: cookbook_name
-    )
-  end
+template php_fpm_conf do
+  cookbook node['rackspace_php']['templates']['php-fpm.conf']
+  source 'php-fpm.conf.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(
+    directives: node['rackspace_php']['fpm']['directives']['conf'],
+    cookbook_name: cookbook_name
+  )
+end
 
-  service php_fpm_service do
-    supports ['status'] => true, ['restart'] => true, ['reload'] => true
-    action [:enable, :start]
-  end
-when 'debian'
-# fpm
-  template php_fpm_conf do
-    cookbook node['rackspace_php']['templates']['php-fpm.conf']
-    source 'php-fpm.conf.erb'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(
-      directives: node['rackspace_php']['fpm']['directives']['conf'],
-      cookbook_name: cookbook_name
-    )
-  end
-
-  service php_fpm_service do
-    supports ['status'] => true, ['restart'] => true, ['reload'] => true
-    action [:enable, :start]
-  end
+service php_fpm_service do
+  supports ['status'] => true, ['restart'] => true, ['reload'] => true
+  action [:enable, :start]
 end

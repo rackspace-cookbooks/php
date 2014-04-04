@@ -33,9 +33,6 @@ suites:
   attributes:
     rackspace_php:
       version_number: 5.4
-  excludes:
-  - ubuntu-12.04
-  - debian-7.2.0
 
 - name: php_5.5
   run_list:
@@ -43,6 +40,24 @@ suites:
   attributes:
     rackspace_php:
       version_number: 5.5
-  excludes:
-  - ubuntu-12.04
+
+- name: phpfpm-redhat
+  run_list:
+  - recipe[rackspace_php]
+  attributes:
+    rackspace_php:
+        fpm:
+          enabled: true
+  includes:
+  - centos-6.4
+
+- name: phpfpm-debian
+  run_list:
+  - recipe[rackspace_php]
+  attributes:
+    rackspace_php:
+        fpm:
+          enabled: true
+  includes:
   - debian-7.2.0
+  - ubuntu-12.04

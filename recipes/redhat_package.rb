@@ -22,6 +22,8 @@
 
 include_recipe 'rackspace_yum'
 
+php_conf = node['rackspace_php']['conf_dir'] + '/php.ini'
+
 case node['rackspace_php']['version_number']
 when '5.3'
   node['rackspace_php']['packages'].each do |pkg|
@@ -68,26 +70,14 @@ when '5.5'
   end
 end
 
-template "#{node['rackspace_php']['conf_dir']}/php.ini" do
+template php_conf do
+  cookbook node['rackspace_php']['templates']['php.ini']
   source 'php.ini.erb'
   owner 'root'
   group 'root'
   mode '0644'
-  variables(directives: node['rackspace_php']['directives'])
-end
-
-# fpm
-template "#{node['rackspace_php']['fpm']['conf_dir']}/php-fpm.conf" do
-  source 'php-fpm.conf.erb'
-  owner 'root'
-  group 'root'
-  mode '0644'
-  variables(directives: node['rackspace_php']['fpm']['directives']['conf'])
-  only_if { node['rackspace_php']['fpm']['enabled'] == true }
-end
-
-service 'php5-fpm' do
-  supports ['status'] => true, ['restart'] => true, ['reload'] => true
-  action [:enable, :start]
-  only_if { node['rackspace_php']['fpm']['enabled'] == true }
+  variables(
+    directives: node['rackspace_php']['directives'],
+    cookbook_name: cookbook_name
+  )
 end

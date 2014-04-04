@@ -206,7 +206,6 @@ end
 def manage_pecl_ini(name, act, directives, zend_extensions)
   ext_prefix = getextension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
-
   files = get_extension_files(name)
 
   extensions = Hash[ files.map { |filepath|   # rubocop:disable Blocks

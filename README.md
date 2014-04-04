@@ -1,6 +1,6 @@
 rackspace_php Cookbook
 ============
-Installs and configures PHP 5.3 (by default) and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages along with PECL channels. Can also install PHP 5.4 and 5.5 on RHEL/Centos systems.
+Installs and configures PHP 5.3 (by default) and the PEAR package management system.  Also includes LWRPs for managing PEAR packages and channels. Can also install PHP 5.4 and 5.5.
 
 
 Requirements
@@ -10,10 +10,7 @@ Requirements
 - CentOS, Red Hat
 
 ### Cookbooks 
-- rackspace_build_essential
 - rackspace_yum
-- xml
-- mysql
 
 Attributes
 ----------
@@ -25,6 +22,14 @@ The file also contains the following attribute types:
 
 * platform specific locations and settings.
 * source installation settings
+* template overrides for `php.ini` and `php-fpm.ini`
+
+### php-fpm
+To enable php-fpm The following is recommended:
+* Set `node.default['rackspace_php']['fpm']['enabled'] = true`
+* If you need php5.4 or php5.5 and php-fpm, you'll need to populate the package yourself:
+ *Add `php-fpm` to the packages hash: i.e. `node.set['rackspace_php']['packages'] = %w(php54 php54-devel php54-cli php54-pear php54-fpm)`
+* `node['rackspace_php']['fpm']['directives']['conf'] = {}` hash of directives to write to php-fpm packages.
 
 
 Resource/Provider
@@ -157,8 +162,13 @@ Include the default recipe in a run list, to get PHP.  By default PHP is install
 
 If `node['rackspace_php']['version_number']` is set to other than 5.3 (such as 5.4 or 5.5) Then it will install these version of PHP but only on RHEL and CentOS servers. Debian and Ubuntu will only instal the default PHP version 5.3
 
+This will also include the fpm recipe if the attribute is enabled.
+
 ### pear
 This package ensure that 'pear.php.net' and 'pecl.php.net' are updated and current on the server.
+
+### fpm
+Sets up php-fpm conf file and starts the service.
 
 Usage
 -----
@@ -191,6 +201,7 @@ License & Authors
 - Author:: Seth Chisamore (<schisamo@opscode.com>)
 - Author:: Joshua Timberman (<joshua@opscode.com>)
 - Author:: Christopher Coffey (<christopher.coffey@rackspace.com>)
+- Author:: Ryan Richard (<ryan.richard@rackspace.com>)
 
 ```text
 Copyright:: 2011, Opscode, Inc

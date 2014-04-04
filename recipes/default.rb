@@ -28,3 +28,7 @@ when 'rhel'
 when 'debian'
   include_recipe 'rackspace_php::debian_package'
 end
+
+if node['rackspace_php']['fpm']['enabled'] == true
+  include_recipe 'rackspace_php::fpm'
+end

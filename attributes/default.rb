@@ -27,6 +27,8 @@ default['rackspace_php']['additional_modules'] = []
 default['rackspace_php']['directives'] = {}
 default['rackspace_php']['fpm']['directives']['conf'] = {}
 default['rackspace_php']['fpm']['directives']['ini'] = {}
+default['rackspace_php']['fpm']['status_path'] = 'status'
+default['rackspace_php']['fpm']['ping_path'] = 'ping'
 
 default['rackspace_php']['fpm']['enabled'] = false
 
@@ -57,3 +59,5 @@ end
 
 default['rackspace_php']['templates']['php.ini'] = 'rackspace_php'
 default['rackspace_php']['templates']['php-fpm.conf'] = 'rackspace_php'
+default['rackspace_php']['templates']['php-fpm_status.sh'] = 'rackspace_php'
+default['rackspace_php']['templates']['fpm-monitoring.ini'] = 'rackspace_php'

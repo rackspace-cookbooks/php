@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# THIS FILE IS MANAGED BY CHEF
+
+STATUS=$(SCRIPT_NAME=/status \
+SCRIPT_FILENAME=/status \
+REQUEST_METHOD=GET \
+QUERY_STRING="json&full" \
+cgi-fcgi -bind -connect /var/run/php5-fpm.sock | tail -n1)
+
+PING=$(SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock | head -n4)
+
+#json parsing with bash and python
+# echo '{"hostname":"test","domainname":"example.com"}' | python -c 'from __future__ import print_function;import json,sys;obj=json.load(sys.stdin);print(obj["hostname"])'
